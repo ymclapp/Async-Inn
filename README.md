@@ -1,6 +1,8 @@
 # Async-Inn
 Lab 11 to build a database of hotel properties with amenities, etc.
 
+Welcome to the Async Inn!  You will be able to see our different locations, rooms, amenities, etc.
+
 ##  Yvette Clapp
 ##  October 18, 2021
 

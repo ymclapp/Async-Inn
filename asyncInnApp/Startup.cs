@@ -24,19 +24,21 @@ namespace asyncInnApp
       Configuration = configuration;
     }
 
-    //- Register our DbContext with the app within ConfigureServices() services.AddDbContext()is called as a generic with our DbContext as the type - This will allow us to set options, such as connecting to our SQL Server
+    //Register our DbContext with the app within ConfigureServices() services.AddDbContext()is called as a generic with our DbContext as the type - This will allow us to set options, such as connecting to our SQL Server
 
 
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-    public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-      services.AddDbContext<HotelsDBContext>(options => {
+          services.AddDbContext<HotelsDBContext>(options => {
         // Our DATABASE_URL from js days
-        string connectionString = Configuration.GetConnectionString("DefaultConnection");
-        options.UseSqlServer(connectionString);
-      });
-    }
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            options.UseSqlServer(connectionString);
+          });
+
+          services.AddControllers();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,18 +52,13 @@ namespace asyncInnApp
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
+              endpoints.MapControllers();
+
+              endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
-              endpoints.MapGet("/HI", async context =>
-              {
-                await context.Response.WriteAsync("Hi!!!!!!!");
-              });
-              endpoints.MapGet("/500", async context =>
-              {
-                throw new InvalidOperationException("Boom!!!");
-              });
+                
             });
         }
     }
