@@ -1,13 +1,13 @@
-using asyncInnApp.Models;
 using System;
+using asyncInnApp.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace asyncInnApp.Services
 {
-  public interface IHotelRepository
+  public interface IAmenityRepository
   {
-      Task<List<Hotels>> GetAll();
+    Task<List<Amenity>> GetAll ( );
   }
 }

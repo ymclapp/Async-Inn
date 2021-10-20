@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace asyncInnApp.Services
 {
-  public interface IHotelRepository
+  public interface IRoomRepository
   {
-      Task<List<Hotels>> GetAll();
+    Task<List<Room>> GetAll ( );
   }
 }

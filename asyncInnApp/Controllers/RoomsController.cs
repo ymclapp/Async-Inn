@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using asyncInnApp.Data;
 using asyncInnApp.Models;
+using asyncInnApp.Services;
 
 namespace asyncInnApp.Controllers
 {
@@ -15,9 +16,11 @@ namespace asyncInnApp.Controllers
     public class RoomsController : ControllerBase
     {
         private readonly HotelsDBContext _context;
+        private readonly IRoomRepository rooms;
 
-        public RoomsController(HotelsDBContext context)
+        public RoomsController(IRoomRepository rooms, HotelsDBContext context)
         {
+            this.rooms = rooms;
             _context = context;
         }
 
@@ -25,7 +28,8 @@ namespace asyncInnApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
         {
-            return await _context.Rooms.ToListAsync();
+      return await rooms.GetAll();
+      //return await _context.Rooms.ToListAsync();
         }
 
         // GET: api/Rooms/5
