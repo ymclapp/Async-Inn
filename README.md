@@ -7,7 +7,8 @@ Welcome to the Async Inn!  You will be able to see our different locations, room
 ##  October 18, 2021
 
 ###  ERD Image
-![Async-Inn ERD](images/asyncERD.jpg)
+![My draft Async-Inn ERD](images/asyncERD.jpg)
+![The Requested Async-Inn ERD](images/async-inn-erd.jpg)
 
 ###  Tables and definitions
 ![Async-Inn Tables Example](images/asyncTables.jpg)
@@ -25,3 +26,10 @@ Welcome to the Async Inn!  You will be able to see our different locations, room
 -  Room Types - includes smoking, non-smoking, and pet friendly
 -  Room Numbers - provides a few generic ranges and the specific custom suites that each location uses the same room number for
 -  Room Rates - again, similar with generic amounts, but then also a Hotels.com rate and a custom rate
+
+### Updated 10/19/2021
+
+
+
+
+
