@@ -46,6 +46,7 @@ namespace asyncInnApp
       //services.AddSingleton<IHotelRepository, DatabaseHotelRepository>();
 
       services.AddScoped<IHotelRepository, DatabaseHotelRepository>();
+      services.AddScoped<IRoomRepository, DatabaseRoomRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

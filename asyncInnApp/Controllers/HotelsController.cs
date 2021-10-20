@@ -18,7 +18,7 @@ namespace asyncInnApp.Controllers
         private readonly HotelsDBContext _context;  //we are asking for a dependency
         private readonly IHotelRepository hotels;
 
-        public HotelsController(IHotelRepository hotels, HotelsDBContext context) //we are responding with the dependency
+        public HotelsController(IHotelRepository hotels, HotelsDBContext context) //we are responding with the dependency.  Leave the HotelsDBContext for Rooms and Amenities since the HotelsDBContext is the only one for the database.
         {
           this.hotels = hotels;
           _context = context;
