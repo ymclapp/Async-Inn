@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using asyncInnApp.Data;
+using asyncInnApp.Services;
+using asyncInnApp.Services.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,6 +40,12 @@ namespace asyncInnApp
           });
 
           services.AddControllers();
+
+      //Our services!
+      //Can't be a singleton because it dpends on Scoped DbContext
+      //services.AddSingleton<IHotelRepository, DatabaseHotelRepository>();
+
+      services.AddScoped<IHotelRepository, DatabaseHotelRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

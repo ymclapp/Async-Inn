@@ -20,7 +20,7 @@ namespace asyncInnApp.Controllers
 
         public HotelsController(IHotelRepository hotels, HotelsDBContext context) //we are responding with the dependency
         {
-      this.hotels = hotels;
+          this.hotels = hotels;
           _context = context;
         }
 
@@ -28,9 +28,9 @@ namespace asyncInnApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hotels>>> GetHotels()
         {
-      return await hotels.GetAll();
+          return await hotels.GetAll();
 
-          //return await _context.Hotels.ToListAsync();
+          //return await _context.Hotels.ToListAsync(); <<--went to DatabaseHotelRepository and replaced with the above
         }
 
         // GET: api/Hotels/5
