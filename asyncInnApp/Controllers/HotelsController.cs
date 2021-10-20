@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using asyncInnApp.Data;
 using asyncInnApp.Models;
+using asyncInnApp.Services;
 
 namespace asyncInnApp.Controllers
 {
@@ -14,18 +15,22 @@ namespace asyncInnApp.Controllers
     [ApiController]
     public class HotelsController : ControllerBase
     {
-        private readonly HotelsDBContext _context;
+        private readonly HotelsDBContext _context;  //we are asking for a dependency
+        private readonly IHotelRepository hotels;
 
-        public HotelsController(HotelsDBContext context)
+        public HotelsController(IHotelRepository hotels, HotelsDBContext context) //we are responding with the dependency
         {
-            _context = context;
+      this.hotels = hotels;
+          _context = context;
         }
 
         // GET: api/Hotels
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hotels>>> GetHotels()
         {
-            return await _context.Hotels.ToListAsync();
+      return await hotels.GetAll();
+
+          //return await _context.Hotels.ToListAsync();
         }
 
         // GET: api/Hotels/5
