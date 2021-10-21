@@ -83,7 +83,7 @@ namespace asyncInnApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotels(Hotel hotels)
         {
-          await Hotel.Add(hotels);
+          await this.hotels.Add(hotels);
       //_context.Hotels.Add(hotels);  <<--moved to DatabaseHotelRepository
       //await _context.SaveChangesAsync();  <<--moved to DatabaseHotelRepository
 
