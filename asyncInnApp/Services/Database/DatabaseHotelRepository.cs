@@ -16,7 +16,16 @@ namespace asyncInnApp.Services.Database
       _context = context;
     }
 
-    public Task<List<Hotel>> DeleteHotels ( int id )
+    public async Task Remove ( int id )
+    {
+      var hotels = await _context.Hotels.FindAsync(id);
+      _context.Hotels.Remove(hotels);
+      await _context.SaveChangesAsync();
+
+      //return NoContent();
+    }
+
+    private void NoContent ( )
     {
       throw new NotImplementedException();
     }
@@ -64,8 +73,7 @@ namespace asyncInnApp.Services.Database
           throw;
         }
       }
-      //if (!await this.hotels.TryUpdate(hotels))
-      //  return NoContent();
+
       return true;
     }
 
@@ -77,22 +85,9 @@ namespace asyncInnApp.Services.Database
     private bool HotelsExists(int id)  
     {
     return _context.Hotels.Any(e => e.Id == id);
-    //return await hotels.HotelsExists(id);
+
     }
 
-    public Task<List<Hotel>> PutHotels ( int id, Hotel hotels )
-    {
-      throw new NotImplementedException();
-    }
 
-    //public Task<bool> TryUpdate ( Hotel hotels )
-    //{
-      //throw new NotImplementedException();
-    //}
-
-    //public Task<bool> TryUpdate ( Hotel hotels )
-    //{
-    // throw new NotImplementedException();
-    //}
   }
 }

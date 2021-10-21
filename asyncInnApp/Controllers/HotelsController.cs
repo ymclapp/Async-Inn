@@ -47,7 +47,7 @@ namespace asyncInnApp.Controllers
             return hotels;
         }
 
-        // PUT: api/Hotels/5
+        // PUT: api/Hotels/5 - context is gone
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHotels(int id, Hotel hotels)
@@ -97,14 +97,15 @@ namespace asyncInnApp.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotels(int id)
         {
-            var hotels = await _context.Hotels.FindAsync(id);
+      await this.hotels.Remove(id);
+      //var hotels = await _context.Hotels.FindAsync(id);
             if (hotels == null)
             {
                 return NotFound();
             }
-
-            _context.Hotels.Remove(hotels);
-            await _context.SaveChangesAsync();
+      //await this.hotels.Remove(hotels);
+            //_context.Hotels.Remove(hotels);
+            //await _context.SaveChangesAsync();
 
             return NoContent();
         }
