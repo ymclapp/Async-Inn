@@ -57,28 +57,31 @@ namespace asyncInnApp.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(hotels).State = EntityState.Modified;
+           // _context.Entry(hotels).State = EntityState.Modified;
 
-            try
+           // try
+           // {
+            //    await _context.SaveChangesAsync();
+            //}
+           // catch (DbUpdateConcurrencyException)
+            //{
+                //if (!HotelsExists(id))
+                //{
+                //   return NotFound();
+                //}
+                //else
+            //    {
+            //        throw;
+            //    }
+            //}
+            if(!await this.hotels.TryUpdate(hotels))
             {
-                await _context.SaveChangesAsync();
+              return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return NoContent();
-        }
+           }
 
-        // POST: api/Hotels - ****has error at add that it isn't implemented (per Postman)****
+        // POST: api/Hotels - context is gone
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotels(Hotel hotels)
@@ -106,10 +109,10 @@ namespace asyncInnApp.Controllers
             return NoContent();
         }
 
-        private bool HotelsExists(int id)
-        {
-          return _context.Hotels.Any(e => e.Id == id);
+        //private bool HotelsExists(int id)  <<--moved to databasehotelrepository
+        //{
+          //return _context.Hotels.Any(e => e.Id == id);
       //return await hotels.HotelsExists(int id);
-    }
+    //}
     }
 }

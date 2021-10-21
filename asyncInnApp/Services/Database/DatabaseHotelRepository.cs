@@ -44,9 +44,55 @@ namespace asyncInnApp.Services.Database
       await _context.SaveChangesAsync();
     }
 
+    public async Task<bool> TryUpdate ( Hotel hotels )
+    {
+      _context.Entry(hotels).State = EntityState.Modified;
+
+      try
+      {
+        await _context.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!HotelsExists(hotels.Id))
+        {
+          //return NotFound();
+          return false;
+        }
+        else
+        {
+          throw;
+        }
+      }
+      //if (!await this.hotels.TryUpdate(hotels))
+      //  return NoContent();
+      return true;
+    }
+
+    private void NotFound ( )
+    {
+      throw new NotImplementedException();
+    }
+
+    private bool HotelsExists(int id)  
+    {
+    return _context.Hotels.Any(e => e.Id == id);
+    //return await hotels.HotelsExists(id);
+    }
+
     public Task<List<Hotel>> PutHotels ( int id, Hotel hotels )
     {
       throw new NotImplementedException();
     }
+
+    //public Task<bool> TryUpdate ( Hotel hotels )
+    //{
+      //throw new NotImplementedException();
+    //}
+
+    //public Task<bool> TryUpdate ( Hotel hotels )
+    //{
+    // throw new NotImplementedException();
+    //}
   }
 }
