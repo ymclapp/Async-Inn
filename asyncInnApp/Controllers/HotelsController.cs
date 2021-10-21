@@ -78,7 +78,7 @@ namespace asyncInnApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Hotels
+        // POST: api/Hotels - ****has error at add that it isn't implemented (per Postman)****
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotels(Hotel hotels)

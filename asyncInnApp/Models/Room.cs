@@ -8,8 +8,13 @@ namespace asyncInnApp.Models
 {
   public class Room
   {
-    public int Id { get; set; } [Required]
+    [Required]
+    public int Id { get; set; }
+
+    [Required]
     public string Name { get; set; }
+
+    [Required]
     public string Layout { get; set; }
   }
 }
