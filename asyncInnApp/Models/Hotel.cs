@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace asyncInnApp.Models
 {
-  public class Hotels
+  public class Hotel
   {
     public int Id { get; set; } [Required]
     public string Name { get; set; }

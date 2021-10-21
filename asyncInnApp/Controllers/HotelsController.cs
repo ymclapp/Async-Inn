@@ -26,19 +26,19 @@ namespace asyncInnApp.Controllers
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotels>>> GetHotels()
+        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
         {
           return await hotels.GetAll();
 
           //return await _context.Hotels.ToListAsync(); <<--went to DatabaseHotelRepository and replaced with the above
         }
 
-        // GET: api/Hotels/5
+        // GET: api/Hotels/5 - context is gone
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotels>> GetHotels(int id)
+        public async Task<ActionResult<Hotel>> GetHotels(int id)
         {
-            var hotels = await _context.Hotels.FindAsync(id);
-
+      //var hotels = await _context.Hotels.FindAsync(id);
+      var hotels = await this.hotels.GetHotels(id);
             if (hotels == null)
             {
                 return NotFound();
@@ -50,7 +50,7 @@ namespace asyncInnApp.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotels(int id, Hotels hotels)
+        public async Task<IActionResult> PutHotels(int id, Hotel hotels)
         {
             if (id != hotels.Id)
             {
@@ -81,7 +81,7 @@ namespace asyncInnApp.Controllers
         // POST: api/Hotels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Hotels>> PostHotels(Hotels hotels)
+        public async Task<ActionResult<Hotel>> PostHotels(Hotel hotels)
         {
             _context.Hotels.Add(hotels);
             await _context.SaveChangesAsync();
@@ -107,7 +107,8 @@ namespace asyncInnApp.Controllers
 
         private bool HotelsExists(int id)
         {
-            return _context.Hotels.Any(e => e.Id == id);
-        }
+          return _context.Hotels.Any(e => e.Id == id);
+      //return await hotels.HotelsExists(int id);
+    }
     }
 }
