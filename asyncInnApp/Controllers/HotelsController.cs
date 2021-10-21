@@ -93,21 +93,20 @@ namespace asyncInnApp.Controllers
       return CreatedAtAction("GetHotels", new { id = hotels.Id }, hotels);
         }
 
-        // DELETE: api/Hotels/5
+        // DELETE: api/Hotels/5 - context is gone
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotels(int id)
         {
       await this.hotels.Remove(id);
-      //var hotels = await _context.Hotels.FindAsync(id);
-            if (hotels == null)
+      //var hotels = await _context.Hotels.FindAsync(id);<<--moved to DatabaseHotelRepository
+      if (hotels == null)
             {
                 return NotFound();
             }
-      //await this.hotels.Remove(hotels);
-            //_context.Hotels.Remove(hotels);
-            //await _context.SaveChangesAsync();
+      //_context.Hotels.Remove(hotels);<<--moved to DatabaseHotelRepository
+      //await _context.SaveChangesAsync();<<--moved to DatabaseHotelRepository
 
-            return NoContent();
+      return NoContent();
         }
 
         //private bool HotelsExists(int id)  <<--moved to databasehotelrepository

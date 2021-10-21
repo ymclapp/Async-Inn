@@ -9,5 +9,11 @@ namespace asyncInnApp.Services
   public interface IRoomRepository
   {
     Task<List<Room>> GetAll ( );
+
+    Task<Room> GetRoom ( int id );
+    Task Add ( Room rooms );
+    Task Remove ( int id );
+    Task<bool> TryUpdate ( Room rooms );
+
   }
 }
