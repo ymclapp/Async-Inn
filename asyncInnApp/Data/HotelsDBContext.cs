@@ -12,14 +12,14 @@ namespace asyncInnApp.Data
     public HotelsDBContext(DbContextOptions options) : base(options) { }
 
     //there should be a hotels table with hotel records in it
-    public DbSet<Hotels> Hotels { get; set; }
+    public DbSet<Hotel> Hotels { get; set; }
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Amenity> Amenities { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Hotels>()
+      modelBuilder.Entity<Hotel>()
         .HasData(
-        new Hotels {
+        new Hotel {
           Id = 1,
           Name = "Hotel Transylvania",
           StreetAddress = "111 Main St",
@@ -28,7 +28,7 @@ namespace asyncInnApp.Data
           Country = "USA",
           Phone = "111-111-1111"
         },
-        new Hotels {
+        new Hotel {
           Id = 2,
           Name = "Hotel Stanley",
           StreetAddress = "111 Main St",
@@ -37,7 +37,7 @@ namespace asyncInnApp.Data
           Country = "USA",
           Phone = "111-111-1111"
         },
-        new Hotels {
+        new Hotel {
           Id = 3,
           Name = "Hotel Beverly Wilshire",
           StreetAddress = "111 Main St",

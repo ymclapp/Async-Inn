@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace asyncInnApp.Models
 {
-  public class Hotels
+  public class Hotel
   {
     public int Id { get; set; } [Required]
     public string Name { get; set; }
@@ -16,5 +16,10 @@ namespace asyncInnApp.Models
     public string State { get; set; }
     public string Country { get; set; }
     public string Phone { get; set; }
+
+    internal static Task Add ( Hotel hotels )
+    {
+      throw new NotImplementedException();
+    }
   }
 }

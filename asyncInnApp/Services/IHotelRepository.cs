@@ -8,6 +8,13 @@ namespace asyncInnApp.Services
 {
   public interface IHotelRepository
   {
-      Task<List<Hotels>> GetAll();
+    Task<List<Hotel>> GetAll();
+    //Task<List<Hotels>> GetHotels ( int id );
+    Task<Hotel> GetHotels ( int id );
+    Task<List<Hotel>> PutHotels ( int id, Hotel hotels );
+    //Task alone ~= return void, but awaitable
+    Task Add ( Hotel hotels );
+    Task<List<Hotel>> DeleteHotels ( int id );
+    //Task<HotelsExists> ( int id );
   }
 }
