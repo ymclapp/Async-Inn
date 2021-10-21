@@ -12,8 +12,9 @@ namespace asyncInnApp.Services
     //Task<List<Hotels>> GetHotels ( int id );
     Task<Hotel> GetHotels ( int id );
     Task<List<Hotel>> PutHotels ( int id, Hotel hotels );
-    Task<List<Hotel>> PostHotels ( Hotel hotels );
+    //Task alone ~= return void, but awaitable
+    Task Add ( Hotel hotels );
     Task<List<Hotel>> DeleteHotels ( int id );
-    Task<List<Hotel>> HotelsExists ( int id );
+    //Task<HotelsExists> ( int id );
   }
 }

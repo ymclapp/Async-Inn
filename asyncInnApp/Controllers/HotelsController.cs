@@ -24,7 +24,7 @@ namespace asyncInnApp.Controllers
           _context = context;
         }
 
-        // GET: api/Hotels
+        // GET: api/Hotels - context is gone
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
         {
@@ -83,10 +83,11 @@ namespace asyncInnApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotels(Hotel hotels)
         {
-            _context.Hotels.Add(hotels);
-            await _context.SaveChangesAsync();
+          await Hotel.Add(hotels);
+      //_context.Hotels.Add(hotels);  <<--moved to DatabaseHotelRepository
+      //await _context.SaveChangesAsync();  <<--moved to DatabaseHotelRepository
 
-            return CreatedAtAction("GetHotels", new { id = hotels.Id }, hotels);
+      return CreatedAtAction("GetHotels", new { id = hotels.Id }, hotels);
         }
 
         // DELETE: api/Hotels/5

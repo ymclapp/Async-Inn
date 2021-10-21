@@ -16,5 +16,10 @@ namespace asyncInnApp.Models
     public string State { get; set; }
     public string Country { get; set; }
     public string Phone { get; set; }
+
+    internal static Task Add ( Hotel hotels )
+    {
+      throw new NotImplementedException();
+    }
   }
 }

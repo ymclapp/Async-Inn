@@ -32,15 +32,16 @@ namespace asyncInnApp.Services.Database
       //throw new NotImplementedException();
     }
 
-    public Task<List<Hotel>> HotelsExists ( int id )
-    {
-      throw new NotImplementedException();
+    //public async bool HotelsExists ( int id )
+    //{
+      //throw new NotImplementedException();
       //return _context.Hotels.Any(e => e.Id == id);
-    }
+    //}
 
-    public Task<List<Hotel>> PostHotels ( Hotel hotels )
+    public async Task Add ( Hotel hotels )
     {
-      throw new NotImplementedException();
+      _context.Hotels.Add(hotels);
+      await _context.SaveChangesAsync();
     }
 
     public Task<List<Hotel>> PutHotels ( int id, Hotel hotels )
