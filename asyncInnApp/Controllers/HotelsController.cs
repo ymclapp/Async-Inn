@@ -47,7 +47,7 @@ namespace asyncInnApp.Controllers
             return hotels;
         }
 
-        // PUT: api/Hotels/5
+        // PUT: api/Hotels/5 - context is gone
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHotels(int id, Hotel hotels)
@@ -57,59 +57,62 @@ namespace asyncInnApp.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(hotels).State = EntityState.Modified;
+           // _context.Entry(hotels).State = EntityState.Modified;
 
-            try
+           // try
+           // {
+            //    await _context.SaveChangesAsync();
+            //}
+           // catch (DbUpdateConcurrencyException)
+            //{
+                //if (!HotelsExists(id))
+                //{
+                //   return NotFound();
+                //}
+                //else
+            //    {
+            //        throw;
+            //    }
+            //}
+            if(!await this.hotels.TryUpdate(hotels))
             {
-                await _context.SaveChangesAsync();
+              return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return NoContent();
-        }
+           }
 
-        // POST: api/Hotels
+        // POST: api/Hotels - context is gone
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotels(Hotel hotels)
         {
-          await Hotel.Add(hotels);
+          await this.hotels.Add(hotels);
       //_context.Hotels.Add(hotels);  <<--moved to DatabaseHotelRepository
       //await _context.SaveChangesAsync();  <<--moved to DatabaseHotelRepository
 
       return CreatedAtAction("GetHotels", new { id = hotels.Id }, hotels);
         }
 
-        // DELETE: api/Hotels/5
+        // DELETE: api/Hotels/5 - context is gone
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotels(int id)
         {
-            var hotels = await _context.Hotels.FindAsync(id);
-            if (hotels == null)
+      await this.hotels.Remove(id);
+      //var hotels = await _context.Hotels.FindAsync(id);<<--moved to DatabaseHotelRepository
+      if (hotels == null)
             {
                 return NotFound();
             }
+      //_context.Hotels.Remove(hotels);<<--moved to DatabaseHotelRepository
+      //await _context.SaveChangesAsync();<<--moved to DatabaseHotelRepository
 
-            _context.Hotels.Remove(hotels);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+      return NoContent();
         }
 
-        private bool HotelsExists(int id)
-        {
-          return _context.Hotels.Any(e => e.Id == id);
+        //private bool HotelsExists(int id)  <<--moved to databasehotelrepository
+        //{
+          //return _context.Hotels.Any(e => e.Id == id);
       //return await hotels.HotelsExists(int id);
-    }
+    //}
     }
 }

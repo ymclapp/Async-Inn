@@ -9,5 +9,9 @@ namespace asyncInnApp.Services
   public interface IAmenityRepository
   {
     Task<List<Amenity>> GetAll ( );
+    Task<Amenity> GetAmenity ( int id );
+    Task Add ( Amenity amenities );
+    Task Remove ( int id );
+    Task<bool> TryUpdate ( Amenity amenities );
   }
 }
