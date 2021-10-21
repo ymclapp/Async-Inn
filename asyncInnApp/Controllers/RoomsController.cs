@@ -98,7 +98,8 @@ namespace asyncInnApp.Controllers
       return CreatedAtAction("GetRoom", new { id = rooms.Id }, rooms);
     }
 
-    // DELETE: api/Rooms/5
+    //************************************
+    // DELETE: api/Rooms/5 - context is gone
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRoom ( int id )
     {
