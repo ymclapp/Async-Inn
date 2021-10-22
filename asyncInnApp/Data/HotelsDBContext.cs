@@ -84,6 +84,11 @@ namespace asyncInnApp.Data
 
       modelBuilder.Entity<RoomAmenity>()
         .HasKey(r => new { r.RoomId, r.AmenityId });  //<<--anonymous type - new {...} - creates composite key for table
+
+      modelBuilder.Entity<RoomAmenity>()
+        .HasData(
+          new RoomAmenity { RoomId = 1, AmenityId = 1 }
+        );
     }
   }
 }
