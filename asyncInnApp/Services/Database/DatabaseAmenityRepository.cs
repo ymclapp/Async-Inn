@@ -29,7 +29,7 @@ namespace asyncInnApp.Services.Database
         //Go get all of each Amenity's RoomAmenity
         .Include(a => a.RoomAmenity)
         //and also include each RoomAmenity Room
-      .ThenInclude(r => r.Room)
+      .ThenInclude(r => r.RARoom)
       .ToListAsync();
 
       return result;
