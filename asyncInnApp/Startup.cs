@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using asyncInnApp.Data;
 using asyncInnApp.Services;
@@ -39,7 +40,14 @@ namespace asyncInnApp
             options.UseSqlServer(connectionString);
           });
 
-          services.AddControllers();
+      //.AddJsonOptions is what is used to stop the "cicular reference"
+          services
+            .AddControllers()
+            .AddNewtonsoftJson(options =>
+            {
+              options.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
 
       //Our services!
       //Can't be a singleton because it dpends on Scoped DbContext
