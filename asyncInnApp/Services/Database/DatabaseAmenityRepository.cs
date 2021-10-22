@@ -25,7 +25,14 @@ namespace asyncInnApp.Services.Database
 
     public async Task<List<Amenity>> GetAll ( )
     {
-      return await _context.Amenities.ToListAsync();
+      var result =  await _context.Amenities
+        //Go get all of each Amenity's RoomAmenity
+        .Include(a => a.RoomAmenity)
+        //and also include each RoomAmenity Room
+      .ThenInclude(r => r.Room)
+      .ToListAsync();
+
+      return result;
     }
 
     public async Task<Amenity> GetAmenity ( int id )

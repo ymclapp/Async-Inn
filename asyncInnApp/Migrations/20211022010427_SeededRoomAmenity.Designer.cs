@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using asyncInnApp.Data;
 
 namespace asyncInnApp.Migrations
 {
     [DbContext(typeof(HotelsDBContext))]
-    partial class HotelsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20211022010427_SeededRoomAmenity")]
+    partial class SeededRoomAmenity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,8 +171,6 @@ namespace asyncInnApp.Migrations
 
                     b.HasKey("RoomId", "AmenityId");
 
-                    b.HasIndex("AmenityId");
-
                     b.ToTable("RoomAmenities");
 
                     b.HasData(
@@ -179,25 +179,6 @@ namespace asyncInnApp.Migrations
                             RoomId = 1,
                             AmenityId = 1
                         });
-                });
-
-            modelBuilder.Entity("asyncInnApp.Models.RoomAmenity", b =>
-                {
-                    b.HasOne("asyncInnApp.Models.Amenity", "FKAmenity")
-                        .WithMany()
-                        .HasForeignKey("AmenityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("asyncInnApp.Models.Room", "FKRoom")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FKAmenity");
-
-                    b.Navigation("FKRoom");
                 });
 #pragma warning restore 612, 618
         }
