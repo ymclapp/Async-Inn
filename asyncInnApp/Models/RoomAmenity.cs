@@ -9,5 +9,10 @@ namespace asyncInnApp.Models
   {
     public int RoomId { get; set; }
     public int AmenityId { get; set; }
+
+    //Add Navigation property that will create a foreign key
+    //Linked to RoomId/AmenityId by naming convention PropId
+    public Room FKRoom { get; set; }
+    public Amenity FKAmenity { get; set; }
   }
 }
