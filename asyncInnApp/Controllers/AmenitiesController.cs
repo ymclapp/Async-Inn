@@ -114,10 +114,19 @@ namespace asyncInnApp.Controllers
 
             return NoContent();
         }
-        //moved to databaseamenityrepository
-        //private bool AmenityExists(int id)
-       // {
-       //     return _context.Amenities.Any(e => e.Id == id);
-       // }
+    //moved to databaseamenityrepository
+    //private bool AmenityExists(int id)
+    // {
+    //     return _context.Amenities.Any(e => e.Id == id);
+    // }
+
+    //POST:  api/Amenities/1/Rooms/1
+    [HttpPost]
+    [Route("{id}/Rooms/{roomId}")]
+    public async Task<IActionResult> AddAmenityToRoom ( int id, int roomId )
+    {
+      await this.amenities.AddRoom(id, roomId);
+      return NoContent();
     }
+  }
 }

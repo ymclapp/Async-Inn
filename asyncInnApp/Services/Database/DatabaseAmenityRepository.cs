@@ -23,6 +23,17 @@ namespace asyncInnApp.Services.Database
       await _context.SaveChangesAsync();
     }
 
+    public async Task AddRoom ( int amenityId, int roomId )
+    {
+      var roomAmenity = new RoomAmenity
+      {
+        AmenityId = amenityId,
+        RoomId = roomId,
+      };
+      _context.RoomAmenities.Add(roomAmenity);
+      await _context.SaveChangesAsync();
+    }
+
     public async Task<List<Amenity>> GetAll ( )
     {
       var result =  await _context.Amenities

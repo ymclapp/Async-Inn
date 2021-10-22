@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,7 +32,8 @@ namespace asyncInnApp.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomAmenity>> GetRoomAmenity(int id)
         {
-            var roomAmenity = await _context.RoomAmenities.FindAsync(id);
+          //won't work due to composite id having two different ids
+          var roomAmenity = await _context.RoomAmenities.FindAsync(id);
 
             if (roomAmenity == null)
             {
@@ -118,5 +119,7 @@ namespace asyncInnApp.Controllers
         {
             return _context.RoomAmenities.Any(e => e.RoomId == id);
         }
+
+
     }
 }
