@@ -12,7 +12,7 @@ namespace asyncInnApp.Services
     Task<Amenity> GetAmenity ( int id );
     Task Add ( Amenity amenities );
 
-    Task RemoveAmenity ( int id, int roomId);
+    Task RemoveAmenity ( int amenityId, int roomId);
     Task<bool> TryUpdate ( Amenity amenities );
 
     Task AddRoom ( int amenityId, int roomId );

@@ -36,8 +36,8 @@ namespace asyncInnApp.Services.Database
 
     //need to finish
     //public async Task RemoveRoom (int amenityId, int roomId)
-
-   // {
+    //{
+//
     //}
 
     public async Task<List<Amenity>> GetAll ( )
@@ -62,11 +62,12 @@ namespace asyncInnApp.Services.Database
       throw new NotImplementedException();
     }
 
-    public Task RemoveAmenity ( int id, int roomId )
+    public async Task RemoveAmenity ( int amenityId, int roomId )
     {
-      throw new NotImplementedException();
+      var roomAmenity = await _context.RoomAmenities.FindAsync(amenityId, roomId);
+      _context.RoomAmenities.Remove(roomAmenity);
+      await _context.SaveChangesAsync();
     }
-
     public async Task<bool> TryUpdate ( Amenity amenities )
     {
       _context.Entry(amenities).State = EntityState.Modified;
