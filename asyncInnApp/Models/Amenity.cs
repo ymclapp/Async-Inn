@@ -16,6 +16,6 @@ namespace asyncInnApp.Models
     public string Name { get; set; }
 
     //Reverse Navigation Properties - allows us to get to from amenity to the corresponding RoomAmenity
-    public List<RoomAmenity> RoomAmenities { get; set; }
+    public List<RoomAmenity> RoomAmenity { get; set; }
   }
 }
