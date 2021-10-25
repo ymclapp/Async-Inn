@@ -37,14 +37,14 @@ namespace asyncInnApp.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<Room>> GetRoom ( int id )
     {
-      var rooms = await this.rooms.GetRoom(id);
 
-      if (rooms == null)
+      var room = await _context.Rooms.FindAsync(id);
+      if (this.rooms == null)
       {
         return NotFound();
       }
 
-      return rooms;
+      return room;
     }
 
 

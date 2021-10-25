@@ -34,6 +34,12 @@ namespace asyncInnApp.Services.Database
       await _context.SaveChangesAsync();
     }
 
+    //need to finish
+    //public async Task RemoveRoom (int amenityId, int roomId)
+
+   // {
+    //}
+
     public async Task<List<Amenity>> GetAll ( )
     {
       var result =  await _context.Amenities
@@ -52,6 +58,11 @@ namespace asyncInnApp.Services.Database
     }
 
     public Task Remove ( int id )
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task RemoveAmenity ( int id, int roomId )
     {
       throw new NotImplementedException();
     }

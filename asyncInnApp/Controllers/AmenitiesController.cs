@@ -39,16 +39,19 @@ namespace asyncInnApp.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Amenity>> GetAmenity(int id)
         {
-            //var amenity = await _context.Amenities.FindAsync(id);
-            var amenities = await this.amenities.GetAmenity(id);
+      var amenity = await _context.Amenities.FindAsync(id);
+      //var amenity = await this.GetAmenities();
+        //.Include(a => a.RoomAmenities)
+        //.ThenInclude(ra => ra.RARoom)
+        //.FindAsync(id);
 
             if (amenities == null)
             {
                 return NotFound();
             }
 
-            return amenities;
-        }
+      return amenity;
+    }
 
     //****************************************
         // PUT: api/Amenities/5 - context is gone
@@ -86,6 +89,8 @@ namespace asyncInnApp.Controllers
             return NoContent();
         }
 
+
+    //*********************************************************************
         // POST: api/Amenities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -99,8 +104,9 @@ namespace asyncInnApp.Controllers
             return CreatedAtAction("GetAmenity", new { id = amenities.Id }, amenities);
         }
 
-        // DELETE: api/Amenities/5
-        [HttpDelete("{id}")]
+    //*********************************************************************
+    // DELETE: api/Amenities/5
+    [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAmenity(int id)
         {
             var amenity = await _context.Amenities.FindAsync(id);
@@ -120,12 +126,23 @@ namespace asyncInnApp.Controllers
     //     return _context.Amenities.Any(e => e.Id == id);
     // }
 
-    //POST:  api/Amenities/1/Rooms/1
+
+    //*********************************************************************
+    //POST:  api/Amenities/5/Rooms/17
     [HttpPost]
     [Route("{id}/Rooms/{roomId}")]
     public async Task<IActionResult> AddAmenityToRoom ( int id, int roomId )
     {
       await this.amenities.AddRoom(id, roomId);
+      return NoContent();
+    }
+
+    //DELETE:  api/Amenities/5/Rooms/17
+    [HttpDelete]
+    [Route("{id}/Rooms/{roomId}")]
+    public async Task<IActionResult> RemoveFromRoom(int id, int roomId)
+    {
+      await amenities.RemoveAmenity(id, roomId);  //need to finish in the DatabaseAmenityRepository
       return NoContent();
     }
   }

@@ -29,7 +29,13 @@ namespace asyncInnApp.Services.Database
 
     public async Task<Room> GetRoom ( int id )
     {
+      var room = await _context.Rooms
+      .Include(r => r.RoomAmenities)
+      .ThenInclude(ra => ra.RAAmenity)
+      .FirstOrDefaultAsync(r => r.Id == id);
+
       return await _context.Rooms.FindAsync(id);
+
     }
 
     public async Task Remove ( int id )
