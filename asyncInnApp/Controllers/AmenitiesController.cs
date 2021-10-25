@@ -36,7 +36,7 @@ namespace asyncInnApp.Controllers
 
     //***********************************
         // GET: api/Amenities/5 - context is gone
-        [HttpGet("{id}")]
+        [HttpGet("Amenities/{id}")]
         public async Task<ActionResult<Amenity>> GetAmenity(int id)
         {
       var amenity = await _context.Amenities.FindAsync(id);
@@ -45,7 +45,7 @@ namespace asyncInnApp.Controllers
         //.ThenInclude(ra => ra.RARoom)
         //.FindAsync(id);
 
-            if (amenities == null)
+            if (amenity == null)
             {
                 return NotFound();
             }
