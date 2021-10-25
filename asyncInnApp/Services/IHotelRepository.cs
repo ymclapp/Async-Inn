@@ -14,6 +14,12 @@ namespace asyncInnApp.Services
     
     //Task alone ~= return void, but awaitable like the Task Add below
     Task Add ( Hotel hotels );
+
+    /// <summary>
+    /// Try to delete, but return false if id not found
+    /// </summary>
+    /// <param name="id">The id to delete</param>
+    /// <returns>Task with value of true if delete worked; fale if not found</returns>
     Task Remove ( int id );
     Task<bool> TryUpdate ( Hotel hotels );
 

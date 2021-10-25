@@ -22,6 +22,17 @@ namespace asyncInnApp.Services.Database
       await _context.SaveChangesAsync();
     }
 
+    public async Task AddAmenity ( int amenityId, int roomId )
+    {
+      var roomAmenity = new RoomAmenity
+      {
+        AmenityId = amenityId,
+        RoomId = roomId,
+      };
+      _context.RoomAmenities.Add(roomAmenity);
+      await _context.SaveChangesAsync();
+    }
+
     public async Task<List<Room>> GetAll()
     {
       return await _context.Rooms.ToListAsync();
@@ -29,16 +40,31 @@ namespace asyncInnApp.Services.Database
 
     public async Task<Room> GetRoom ( int id )
     {
+      var room = await _context.Rooms
+      .Include(r => r.RoomAmenities)
+      .ThenInclude(ra => ra.RAAmenity)
+      .FirstOrDefaultAsync(r => r.Id == id);
+
       return await _context.Rooms.FindAsync(id);
+
     }
 
     public async Task Remove ( int id )
     {
-      var rooms = await _context.Rooms.FindAsync(id);
+      var rooms = await
+        _context.Rooms.FindAsync(id);
       _context.Rooms.Remove(rooms);
       await _context.SaveChangesAsync();
     }
 
+    public async Task RemoveRoom(int amenityId, int roomId)
+    {
+      var roomAmenity = await _context.RoomAmenities.FindAsync(amenityId, roomId);
+      _context.RoomAmenities.Remove(roomAmenity);
+      await _context.SaveChangesAsync();
+    }
+
+    
     public async Task<bool> TryUpdate ( Room rooms )
     {
       _context.Entry(rooms).State = EntityState.Modified;

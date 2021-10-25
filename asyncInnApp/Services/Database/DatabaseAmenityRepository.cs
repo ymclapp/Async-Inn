@@ -23,11 +23,29 @@ namespace asyncInnApp.Services.Database
       await _context.SaveChangesAsync();
     }
 
-    public async Task<List<Amenity>> GetAll ( )
+    public async Task AddRoom ( int amenityId, int roomId )
+    {
+      var roomAmenity = new RoomAmenity
+      {
+        AmenityId = amenityId,
+        RoomId = roomId,
+      };
+      _context.RoomAmenities.Add(roomAmenity);
+      await _context.SaveChangesAsync();
+    }
+
+    //need to finish
+    public async Task RemoveRoom (int amenityId, int roomId)
+    {
+      var roomAmenity = await _context.RoomAmenities.FindAsync(amenityId, roomId);
+    _context.RoomAmenities.Remove(roomAmenity);
+      await _context.SaveChangesAsync ( );
+    }
+  public async Task<List<Amenity>> GetAll ( )
     {
       var result =  await _context.Amenities
         //Go get all of each Amenity's RoomAmenity
-        .Include(a => a.RoomAmenity)
+        .Include(a => a.RoomAmenities)
         //and also include each RoomAmenity Room
       .ThenInclude(r => r.RARoom)
       .ToListAsync();
@@ -40,11 +58,19 @@ namespace asyncInnApp.Services.Database
       return await _context.Amenities.FindAsync(id);
     }
 
-    public Task Remove ( int id )
+    public async Task Remove ( int id )
     {
-      throw new NotImplementedException();
+      var amenities = await _context.Amenities.FindAsync(id);
+      _context.Amenities.Remove(amenities);
+      await _context.SaveChangesAsync();
     }
 
+    public async Task RemoveAmenity ( int amenityId, int roomId )
+    {
+      var roomAmenity = await _context.RoomAmenities.FindAsync(amenityId, roomId);
+      _context.RoomAmenities.Remove(roomAmenity);
+      await _context.SaveChangesAsync();
+    }
     public async Task<bool> TryUpdate ( Amenity amenities )
     {
       _context.Entry(amenities).State = EntityState.Modified;

@@ -12,8 +12,13 @@ namespace asyncInnApp.Services
 
     Task<Room> GetRoom ( int id );
     Task Add ( Room rooms );
+
     Task Remove ( int id );
+
+    //Task RemoveAmenity ( int amenityId, int roomId );
+    Task RemoveRoom ( int amenityId, int roomId );
     Task<bool> TryUpdate ( Room rooms );
+    Task AddAmenity ( int amenityId, int roomId );
 
   }
 }

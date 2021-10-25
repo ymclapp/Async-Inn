@@ -37,14 +37,14 @@ namespace asyncInnApp.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<Room>> GetRoom ( int id )
     {
-      var rooms = await this.rooms.GetRoom(id);
 
-      if (rooms == null)
+      var room = await _context.Rooms.FindAsync(id);
+      if (this.rooms == null)
       {
         return NotFound();
       }
 
-      return rooms;
+      return room;
     }
 
 
@@ -113,6 +113,24 @@ namespace asyncInnApp.Controllers
       //_context.Rooms.Remove(room);
       //await _context.SaveChangesAsync();
 
+      return NoContent();
+    }
+
+    //POST:  api/Rooms/5/Amenities/17
+    [HttpPost]
+    [Route("{id}/Rooms/{roomId}/Amenities/{amenityId}")]
+    public async Task<IActionResult> AddRoomToAmenity (int id, int amenityId)
+    {
+      await rooms.AddAmenity(id, amenityId);
+      return NoContent();
+    }
+
+    //DELETE:  api/Rooms/5/Amenities/17
+    [HttpDelete]
+    [Route("{id}/Rooms/{roomId}/Amenities/{amenityId}")]
+    public async Task<IActionResult> RemoveFromAmenity ( int id, int amenityId )
+    {
+      await rooms.RemoveRoom(id, amenityId);  //need to finish in the DatabaseAmenityRepository
       return NoContent();
     }
   }
