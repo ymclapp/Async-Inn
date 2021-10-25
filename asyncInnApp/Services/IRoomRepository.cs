@@ -12,13 +12,13 @@ namespace asyncInnApp.Services
 
     Task<Room> GetRoom ( int id );
     Task Add ( Room rooms );
-    /// <summary>
-    /// Try to delete, but return false if id not found
-    /// </summary>
-    /// <param name="id">The id to delete</param>
-    /// <returns>True if delete worked; fale if not found</returns>
+
     Task Remove ( int id );
+
+    //Task RemoveAmenity ( int amenityId, int roomId );
+    Task RemoveRoom ( int amenityId, int roomId );
     Task<bool> TryUpdate ( Room rooms );
+    Task AddAmenity ( int amenityId, int roomId );
 
   }
 }

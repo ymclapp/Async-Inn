@@ -130,7 +130,7 @@ namespace asyncInnApp.Controllers
     //*********************************************************************
     //POST:  api/Amenities/5/Rooms/17
     [HttpPost]
-    [Route("{id}/Rooms/{roomId}")]
+    [Route("{id}/Amenities/{amenityId}/Rooms/{roomId}")]
     public async Task<IActionResult> AddAmenityToRoom ( int id, int roomId )
     {
       await this.amenities.AddRoom(id, roomId);
@@ -139,7 +139,7 @@ namespace asyncInnApp.Controllers
 
     //DELETE:  api/Amenities/5/Rooms/17
     [HttpDelete]
-    [Route("{id}/Rooms/{roomId}")]
+    [Route("{id}/Amenities/{amenityId}/Rooms/{roomId}")]
     public async Task<IActionResult> RemoveFromRoom(int id, int roomId)
     {
       await amenities.RemoveAmenity(id, roomId);  //need to finish in the DatabaseAmenityRepository

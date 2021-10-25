@@ -115,6 +115,24 @@ namespace asyncInnApp.Controllers
 
       return NoContent();
     }
+
+    //POST:  api/Rooms/5/Amenities/17
+    [HttpPost]
+    [Route("{id}/Rooms/{roomId}/Amenities/{amenityId}")]
+    public async Task<IActionResult> AddRoomToAmenity (int id, int amenityId)
+    {
+      await rooms.AddAmenity(id, amenityId);
+      return NoContent();
+    }
+
+    //DELETE:  api/Rooms/5/Amenities/17
+    [HttpDelete]
+    [Route("{id}/Rooms/{roomId}/Amenities/{amenityId}")]
+    public async Task<IActionResult> RemoveFromAmenity ( int id, int amenityId )
+    {
+      await rooms.RemoveRoom(id, amenityId);  //need to finish in the DatabaseAmenityRepository
+      return NoContent();
+    }
   }
 
 
