@@ -50,9 +50,9 @@ namespace asyncInnApp.Controllers
         // PUT: api/Hotels/5 - context is gone
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotels(int id, Hotel hotels)
+        public async Task<IActionResult> PutHotels(int id, Hotel hotel)
         {
-            if (id != hotels.Id)
+            if (id != hotel.Id)
             {
                 return BadRequest();
             }
@@ -74,7 +74,7 @@ namespace asyncInnApp.Controllers
             //        throw;
             //    }
             //}
-            if(!await this.hotels.TryUpdate(hotels))
+            if(!await this.hotels.TryUpdate(hotel))
             {
               return NotFound();
             }
@@ -84,13 +84,13 @@ namespace asyncInnApp.Controllers
         // POST: api/Hotels - context is gone
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotels(Hotel hotels)
+        public async Task<ActionResult<Hotel>> PostHotels(Hotel hotel)
         {
-          await this.hotels.Add(hotels);
+          await this.hotels.Add(hotel);
       //_context.Hotels.Add(hotels);  <<--moved to DatabaseHotelRepository
       //await _context.SaveChangesAsync();  <<--moved to DatabaseHotelRepository
 
-      return CreatedAtAction("GetHotels", new { id = hotels.Id }, hotels);
+      return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
         }
 
         // DELETE: api/Hotels/5 - context is gone
