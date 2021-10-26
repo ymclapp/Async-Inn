@@ -16,5 +16,6 @@ namespace asyncInnApp.Services
     Task<bool> TryUpdate ( Amenity amenities );
 
     Task AddRoom ( int amenityId, int roomId );
+    //Task AddAmenity ( int amenityId, int roomId );
   }
 }

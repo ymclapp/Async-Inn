@@ -17,9 +17,9 @@ namespace asyncInnApp.Services.Database
       _context = context;
     }
 
-    public async Task Add ( Amenity amenities )
+    public async Task Add ( Amenity amenity )
     {
-      _context.Amenities.Add(amenities);
+      _context.Amenities.Add(amenity);
       await _context.SaveChangesAsync();
     }
 
@@ -47,7 +47,7 @@ namespace asyncInnApp.Services.Database
         //Go get all of each Amenity's RoomAmenity
         .Include(a => a.RoomAmenities)
         //and also include each RoomAmenity Room
-      .ThenInclude(r => r.RARoom)
+      .ThenInclude(r => r.Room)
       .ToListAsync();
 
       return result;
@@ -55,6 +55,12 @@ namespace asyncInnApp.Services.Database
 
     public async Task<Amenity> GetAmenity ( int id )
     {
+      //return await _context.Amenities.FindAsync(id);
+      var amenity = await _context.Amenities
+        .Include(a => a.RoomAmenities)
+        .ThenInclude(ra => ra.Room)
+        .FirstOrDefaultAsync(a => a.Id == id);
+
       return await _context.Amenities.FindAsync(id);
     }
 
@@ -67,7 +73,12 @@ namespace asyncInnApp.Services.Database
 
     public async Task RemoveAmenity ( int amenityId, int roomId )
     {
-      var roomAmenity = await _context.RoomAmenities.FindAsync(amenityId, roomId);
+      var roomAmenity = await _context.RoomAmenities
+
+        .FirstOrDefaultAsync(ar =>
+          ar.AmenityId == amenityId &&
+          ar.RoomId == roomId);
+
       _context.RoomAmenities.Remove(roomAmenity);
       await _context.SaveChangesAsync();
     }
