@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +10,7 @@ using asyncInnApp.Models;
 
 namespace asyncInnApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Rooms/{roomId}/HotelRoom")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -23,9 +23,11 @@ namespace asyncInnApp.Controllers
 
         // GET: api/HotelRooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
+        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int roomId)
         {
-            return await _context.HotelRooms.ToListAsync();
+            return await _context.HotelRooms
+                  .Where(h => h.RoomId == roomId)
+                  .ToListAsync();
         }
 
         // GET: api/HotelRooms/5
