@@ -10,7 +10,7 @@ namespace asyncInnApp.Services
   {
     Task<List<Hotel>> GetAll();
     
-    Task<Hotel> GetHotels ( int id );
+    Task<Hotel> GetHotel ( int id );
     
     //Task alone ~= return void, but awaitable like the Task Add below
     Task Add ( Hotel hotels );

@@ -34,10 +34,10 @@ namespace asyncInnApp.Controllers
 
     //***********************************
         // GET: api/Amenities/5 - context is gone
-        [HttpGet("Amenities/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Amenity>> GetAmenity(int id)
         {
-            var amenity = await _context.Amenities.FindAsync(id);
+            var amenity = await this.amenities.GetAmenity(id);
 
             if (amenity == null)
             {
@@ -69,7 +69,7 @@ namespace asyncInnApp.Controllers
     //*********************************************************************
         // POST: api/Amenities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("{id}")]
         public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
         {
             await this.amenities.Add(amenity);
@@ -97,7 +97,7 @@ namespace asyncInnApp.Controllers
     //*********************************************************************
     //POST:  api/Amenities/5/Rooms/17
         [HttpPost]
-        [Route("Amenities/{id}/Rooms/{roomId}")]
+        [Route("{id}/Rooms/{roomId}")]
         public async Task<IActionResult> AddAmenityToRoom ( int id, int roomId )
         {
               await this.amenities.AddRoom(id, roomId);
@@ -107,7 +107,7 @@ namespace asyncInnApp.Controllers
     //*********************************************************************
     //DELETE:  api/Amenities/5/Rooms/17
         [HttpDelete]
-        [Route("{id}/Amenities/{amenityId}/Rooms/{roomId}")]
+        [Route("{id}/Rooms/{roomId}")]
         public async Task<IActionResult> RemoveFromRoom(int id, int roomId)
         {
               await amenities.RemoveAmenity(id, roomId);  

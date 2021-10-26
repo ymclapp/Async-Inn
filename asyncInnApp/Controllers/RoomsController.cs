@@ -37,8 +37,8 @@ namespace asyncInnApp.Controllers
     public async Task<ActionResult<Room>> GetRoom ( int id )
     {
 
-      var room = await _context.Rooms.FindAsync(id);
-      if (this.rooms == null)
+      var room = await this.rooms.GetRoom(id);
+      if (room == null)
       {
         return NotFound();
       }
@@ -68,7 +68,7 @@ namespace asyncInnApp.Controllers
     //********************
     // POST: api/Rooms - context is gone
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPost]
+    [HttpPost("{id}")]
     public async Task<ActionResult<Room>> PostRoom ( Room room )
     {
       await this.rooms.Add(room);
@@ -82,7 +82,7 @@ namespace asyncInnApp.Controllers
     {
       await this.rooms.Remove(id);
 
-      if (rooms == null)
+      if (rooms == null)  //<<--this is wrong - fix
       {
         return NotFound();
       }
@@ -92,7 +92,7 @@ namespace asyncInnApp.Controllers
 
     //POST:  api/Rooms/5/Amenities/17
     [HttpPost]
-    [Route("{id}/Rooms/{roomId}/Amenities/{amenityId}")]
+    [Route("{id}/Amenities/{amenityId}")]
     public async Task<IActionResult> AddRoomToAmenity ( int id, int amenityId )
     {
       await rooms.AddAmenity(id, amenityId);
@@ -101,10 +101,10 @@ namespace asyncInnApp.Controllers
 
     //DELETE:  api/Rooms/5/Amenities/17
     [HttpDelete]
-    [Route("{id}/Rooms/{roomId}/Amenities/{amenityId}")]
+    [Route("{id}/Amenities/{amenityId}")]
     public async Task<IActionResult> RemoveFromAmenity ( int id, int amenityId )
     {
-      await rooms.RemoveRoom(id, amenityId);  //need to finish in the DatabaseAmenityRepository
+      await rooms.RemoveAmenity(id, amenityId);  //need to finish in the DatabaseAmenityRepository
       return NoContent();
     }
   }

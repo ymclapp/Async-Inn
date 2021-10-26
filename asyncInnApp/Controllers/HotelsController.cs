@@ -26,7 +26,7 @@ namespace asyncInnApp.Controllers
 
         // GET: api/Hotels - context is gone
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotel()
         {
           return await hotels.GetAll();
 
@@ -35,16 +35,16 @@ namespace asyncInnApp.Controllers
 
         // GET: api/Hotels/5 - context is gone
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotels(int id)
+        public async Task<ActionResult<Hotel>> GetHotel(int id)
         {
       //var hotels = await _context.Hotels.FindAsync(id);
-      var hotels = await this.hotels.GetHotels(id);
-            if (hotels == null)
+      var hotel = await this.hotels.GetHotel(id);
+            if (hotel == null)
             {
                 return NotFound();
             }
 
-            return hotels;
+            return hotel;
         }
 
         // PUT: api/Hotels/5 - context is gone
