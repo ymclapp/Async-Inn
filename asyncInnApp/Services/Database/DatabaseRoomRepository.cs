@@ -22,12 +22,12 @@ namespace asyncInnApp.Services.Database
       await _context.SaveChangesAsync();
     }
 
-    public async Task AddAmenity ( int amenityId, int roomId )
+    public async Task AddAmenity ( int roomId, int amenityId )
     {
       var roomAmenity = new RoomAmenity
       {
-        AmenityId = amenityId,
         RoomId = roomId,
+        AmenityId = amenityId,
       };
       _context.RoomAmenities.Add(roomAmenity);
       await _context.SaveChangesAsync();
@@ -63,13 +63,13 @@ namespace asyncInnApp.Services.Database
       await _context.SaveChangesAsync();
     }
 
-    public async Task RemoveRoom(int amenityId, int roomId)
+    public async Task RemoveAmenity(int roomId, int amenityId)
     {
       var roomAmenity = await _context.RoomAmenities
 
         .FirstOrDefaultAsync(ar =>
-          ar.AmenityId == amenityId &&
-          ar.RoomId == roomId);
+          ar.RoomId == roomId &&
+          ar.AmenityId == amenityId);
       _context.RoomAmenities.Remove(roomAmenity);
       await _context.SaveChangesAsync();
     }

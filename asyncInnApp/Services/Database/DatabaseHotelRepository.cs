@@ -35,7 +35,7 @@ namespace asyncInnApp.Services.Database
       return await _context.Hotels.ToListAsync();
     }
 
-    public async Task<Hotel> GetHotels ( int id )
+    public async Task<Hotel> GetHotel ( int id )
     {
       return await _context.Hotels.FindAsync(id);
       //throw new NotImplementedException();
