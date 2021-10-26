@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using asyncInnApp.Data;
 
 namespace asyncInnApp.Migrations
 {
     [DbContext(typeof(HotelsDBContext))]
-    partial class HotelsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20211026191608_UpdatedSomeIdThingsAndRemovedRoomAmenities")]
+    partial class UpdatedSomeIdThingsAndRemovedRoomAmenities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
