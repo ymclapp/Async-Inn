@@ -16,6 +16,7 @@ namespace asyncInnApp.Models
 
     [Required]
     public string Layout { get; set; }
+    public int RoomNumber { get; set; }
 
     //Reverse Navigation Properties - allows us to get to from amenity to the corresponding RoomAmenity
 
