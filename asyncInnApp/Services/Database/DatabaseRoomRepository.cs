@@ -35,14 +35,20 @@ namespace asyncInnApp.Services.Database
 
     public async Task<List<Room>> GetAll()
     {
-      return await _context.Rooms.ToListAsync();
+      //return await _context.Rooms.ToListAsync();
+      var result = await _context.Rooms
+        .Include(r => r.RoomAmenities)
+        .ThenInclude(a => a.Amenity)
+        .ToListAsync();
+
+      return result;
     }
 
     public async Task<Room> GetRoom ( int id )
     {
       var room = await _context.Rooms
       .Include(r => r.RoomAmenities)
-      .ThenInclude(ra => ra.RAAmenity)
+      .ThenInclude(ra => ra.Amenity)
       .FirstOrDefaultAsync(r => r.Id == id);
 
       return await _context.Rooms.FindAsync(id);
@@ -59,7 +65,11 @@ namespace asyncInnApp.Services.Database
 
     public async Task RemoveRoom(int amenityId, int roomId)
     {
-      var roomAmenity = await _context.RoomAmenities.FindAsync(amenityId, roomId);
+      var roomAmenity = await _context.RoomAmenities
+
+        .FirstOrDefaultAsync(ar =>
+          ar.AmenityId == amenityId &&
+          ar.RoomId == roomId);
       _context.RoomAmenities.Remove(roomAmenity);
       await _context.SaveChangesAsync();
     }

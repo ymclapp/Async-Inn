@@ -32,7 +32,7 @@ Welcome to the Async Inn!  You will be able to see our different locations, room
 Completed refactoring the hotels.  After that, I moved on to refactoring the amenities and rooms.  All of the refactoring is done, except the delete for the amenities controller.
 
 ### 10/25/2021 Update
-
+Updated indenting and updated some names to keep them consistent.  Started adding the DTO.
 
 ### Updated 10/21/2021
 

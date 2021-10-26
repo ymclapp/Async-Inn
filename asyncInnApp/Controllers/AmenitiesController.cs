@@ -97,7 +97,7 @@ namespace asyncInnApp.Controllers
     //*********************************************************************
     //POST:  api/Amenities/5/Rooms/17
         [HttpPost]
-        [Route("{id}/Amenities/{amenityId}/Rooms/{roomId}")]
+        [Route("Amenities/{id}/Rooms/{roomId}")]
         public async Task<IActionResult> AddAmenityToRoom ( int id, int roomId )
         {
               await this.amenities.AddRoom(id, roomId);

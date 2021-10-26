@@ -12,7 +12,7 @@ namespace asyncInnApp.Models
 
     //Add Navigation property that will create a foreign key
     //Linked to RoomId/AmenityId by naming convention PropId
-    public Room RARoom { get; set; }
-    public Amenity RAAmenity { get; set; }
+    public Room Room { get; set; }
+    public Amenity Amenity { get; set; }
   }
 }
