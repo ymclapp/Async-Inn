@@ -10,7 +10,7 @@ using asyncInnApp.Models;
 
 namespace asyncInnApp.Controllers
 {
-    [Route("api/Rooms/{roomId}/HotelRoom")]
+    [Route("api/Hotels/{hotelId}/HotelRoom")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -23,10 +23,10 @@ namespace asyncInnApp.Controllers
 
         // GET: api/HotelRooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int roomId)
+        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId)
         {
             return await _context.HotelRooms
-                  .Where(h => h.RoomId == roomId)
+                  .Where(h => h.HotelId == hotelId)//hotel is like students in transcripts
                   .ToListAsync();
         }
 
