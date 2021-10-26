@@ -16,9 +16,9 @@ namespace asyncInnApp.Services.Database
       _context = context;
     }
 
-    public async Task Add ( Room rooms )
+    public async Task Add ( Room room )
     {
-      _context.Rooms.Add(rooms);
+      _context.Rooms.Add(room);
       await _context.SaveChangesAsync();
     }
 
@@ -65,9 +65,9 @@ namespace asyncInnApp.Services.Database
     }
 
     
-    public async Task<bool> TryUpdate ( Room rooms )
+    public async Task<bool> TryUpdate ( Room room )
     {
-      _context.Entry(rooms).State = EntityState.Modified;
+      _context.Entry(room).State = EntityState.Modified;
 
       try
       {
@@ -75,7 +75,7 @@ namespace asyncInnApp.Services.Database
       }
       catch (DbUpdateConcurrencyException)
       {
-        if (!RoomExists(rooms.Id))
+        if (!RoomExists(room.Id))
         {
           //return NotFound();
           return false;

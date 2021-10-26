@@ -17,9 +17,9 @@ namespace asyncInnApp.Services.Database
       _context = context;
     }
 
-    public async Task Add ( Amenity amenities )
+    public async Task Add ( Amenity amenity )
     {
-      _context.Amenities.Add(amenities);
+      _context.Amenities.Add(amenity);
       await _context.SaveChangesAsync();
     }
 

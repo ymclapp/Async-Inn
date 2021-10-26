@@ -30,7 +30,6 @@ namespace asyncInnApp.Controllers
     public async Task<ActionResult<IEnumerable<Room>>> GetRooms ( )
     {
       return await rooms.GetAll();
-      //return await _context.Rooms.ToListAsync();  <<--moved to database room repository
     }
 
     // GET: api/Rooms/5 - context is gone
@@ -52,50 +51,28 @@ namespace asyncInnApp.Controllers
     // PUT: api/Rooms/5 - context is gone
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutRoom ( int id, Room rooms )
+    public async Task<IActionResult> PutRoom ( int id, Room room )
     {
-      if (id != rooms.Id)
+      if (id != room.Id)
       {
         return BadRequest();
       }
-      if (!await this.rooms.TryUpdate(rooms))
+      if (!await this.rooms.TryUpdate(room))
       {
         return NotFound();
       }
       return NoContent();
     }
 
-      //  _context.Entry(room).State = EntityState.Modified;
 
-      //try
-      //{
-      //  await _context.SaveChangesAsync();
-      // }
-      // catch (DbUpdateConcurrencyException)
-      // {
-      //   if (!RoomExists(id))
-      // {
-      //          return NotFound();
-      //    }
-      //  else
-      //{
-      //  throw;
-      //}
-      //}
-
-      //return NoContent();
-
-    //}
     //********************
     // POST: api/Rooms - context is gone
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Room>> PostRoom ( Room rooms )
+    public async Task<ActionResult<Room>> PostRoom ( Room room )
     {
-      //_context.Rooms.Add(room);
-      //await _context.SaveChangesAsync();
-      await this.rooms.Add(rooms);
-      return CreatedAtAction("GetRoom", new { id = rooms.Id }, rooms);
+      await this.rooms.Add(room);
+      return CreatedAtAction("GetRoom", new { id = room.Id }, room);
     }
 
     //************************************
@@ -104,14 +81,11 @@ namespace asyncInnApp.Controllers
     public async Task<IActionResult> DeleteRoom ( int id )
     {
       await this.rooms.Remove(id);
-      //var room = await _context.Rooms.FindAsync(id);
+
       if (rooms == null)
       {
         return NotFound();
       }
-
-      //_context.Rooms.Remove(room);
-      //await _context.SaveChangesAsync();
 
       return NoContent();
     }
@@ -119,7 +93,7 @@ namespace asyncInnApp.Controllers
     //POST:  api/Rooms/5/Amenities/17
     [HttpPost]
     [Route("{id}/Rooms/{roomId}/Amenities/{amenityId}")]
-    public async Task<IActionResult> AddRoomToAmenity (int id, int amenityId)
+    public async Task<IActionResult> AddRoomToAmenity ( int id, int amenityId )
     {
       await rooms.AddAmenity(id, amenityId);
       return NoContent();
@@ -134,11 +108,6 @@ namespace asyncInnApp.Controllers
       return NoContent();
     }
   }
-
-
-       // private bool RoomExists(int id)
-        //{
-          //  return _context.Rooms.Any(e => e.Id == id);
-       // }
-    
 }
+
+
