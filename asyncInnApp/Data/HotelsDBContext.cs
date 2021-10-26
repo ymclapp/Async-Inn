@@ -16,6 +16,7 @@ namespace asyncInnApp.Data
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Amenity> Amenities { get; set; }
     public DbSet<RoomAmenity> RoomAmenities { get; set; }
+    public DbSet<HotelRoom> HotelRooms { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<Hotel>()
@@ -87,8 +88,18 @@ namespace asyncInnApp.Data
 
       modelBuilder.Entity<RoomAmenity>()
         .HasData(
-          new RoomAmenity { RoomId = 1, AmenityId = 1 }
+            new RoomAmenity { RoomId = 1, AmenityId = 1 }
         );
+
+      modelBuilder.Entity<HotelRoom>()
+        .HasKey(h => new { h.RoomNumber, h.HotelId });//<<--creates composite key for table
+
+      modelBuilder.Entity<HotelRoom>()
+        .HasData(
+            new HotelRoom { Id = 1, HotelId = 1, RoomId = 4, Rate = 300, PetFriendly = true}
+      );
+
+
     }
   }
 }
