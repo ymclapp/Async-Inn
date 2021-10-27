@@ -30,7 +30,7 @@ namespace asyncInnApp.Controllers
             return await _context.HotelRooms
                   .Where(h => h.HotelId == hotelId)//hotel is like students in transcripts
                   .Include(h => h.Hotel)
-                  .Include(h => h.Room)
+                  .Include(h => h.Room)//<<--this doesn't seem right - roomnumber?
                   .ToListAsync();
         }
 
