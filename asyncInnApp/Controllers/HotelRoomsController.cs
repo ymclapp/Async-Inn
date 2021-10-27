@@ -11,7 +11,7 @@ using asyncInnApp.Services;
 
 namespace asyncInnApp.Controllers
 {
-    [Route("api/Hotels/{hotelId}/HotelRoom")]
+    [Route("api/Hotels/{hotelId}/Rooms")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -28,9 +28,10 @@ namespace asyncInnApp.Controllers
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId, int roomId)
         {
             return await _context.HotelRooms
-                  .Where(h => h.HotelId == hotelId)//hotel is like students in transcripts
-                  .Include(h => h.Hotel)
-                  .Include(h => h.Room)//<<--this doesn't seem right - roomnumber?
+                  .Where(hr => hr.HotelId == hotelId)//hotel is like students in transcripts
+                  .Include(hr => hr.Hotel)
+                  .Include(hr => hr.Room)//<<--this doesn't seem right - roomnumber?
+                  .ThenInclude(a => a.RoomAmenities)
                   .ToListAsync();
         }
 
@@ -40,7 +41,7 @@ namespace asyncInnApp.Controllers
         {
       var hotelRoom = await _context.HotelRooms
           .Include(h => h.Hotel)
-          .Include(h => h.RoomNumber)
+          //.Include(h => h.RoomNumber)
           .FirstOrDefaultAsync(h => h.HotelId == id);
 
             if (hotelRoom == null || hotelRoom.HotelId !=hotelId)
