@@ -96,45 +96,48 @@ namespace asyncInnApp.Data
 
       modelBuilder.Entity<HotelRoom>()
         .HasData(
-            new HotelRoom {
-              Id = 1,
-              HotelId = 1,
-              RoomId = 1,
-              Rate = 300,
-              PetFriendly = true
-            }
-         );
-
-      modelBuilder.Entity<HotelRoom>()
-        .HasData(
             new HotelRoom
             {
-              Id = 2,
+              RoomNumber = 299,
+              HotelId = 1,
+              RoomId = 3,
+              Rate = 300,
+              PetFriendly = true
+            },
+            new HotelRoom
+            {
               RoomNumber = 102,
               HotelId = 1,
-              RoomId = 2,
+              RoomId = 1,
               Rate = 100,
               PetFriendly = false
             },
             new HotelRoom
             {
-              Id = 3,
               RoomNumber = 302,
               HotelId = 1,
-              RoomId = 4,
+              RoomId = 3,
               Rate = 500,
               PetFriendly = true
             },
             new HotelRoom
             {
-              Id = 4,
               RoomNumber = 201,
               HotelId = 1,
-              RoomId = 3,
+              RoomId = 2,
+              Rate = 250,
+              PetFriendly = false
+            },
+            new HotelRoom
+            {
+              RoomNumber = 251,
+              HotelId = 1,
+              RoomId = 2,
               Rate = 250,
               PetFriendly = false
             }
-      );
+
+     );
 
 
     }

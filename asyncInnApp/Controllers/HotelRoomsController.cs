@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using asyncInnApp.Data;
 using asyncInnApp.Models;
+using asyncInnApp.Services;
 
 namespace asyncInnApp.Controllers
 {
@@ -18,25 +19,31 @@ namespace asyncInnApp.Controllers
 
         public HotelRoomsController(HotelsDBContext context)
         {
-            _context = context;
+      //this.hotelRooms = hotelRooms;
+      _context = context;
         }
 
         // GET: api/HotelRooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId)
+        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId, int roomId)
         {
             return await _context.HotelRooms
                   .Where(h => h.HotelId == hotelId)//hotel is like students in transcripts
+                  .Include(h => h.Hotel)
+                  .Include(h => h.Room)
                   .ToListAsync();
         }
 
         // GET: api/HotelRooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int id)
+        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int id)
         {
-            var hotelRoom = await _context.HotelRooms.FindAsync(id);
+      var hotelRoom = await _context.HotelRooms
+          .Include(h => h.Hotel)
+          .Include(h => h.RoomNumber)
+          .FirstOrDefaultAsync(h => h.HotelId == id);
 
-            if (hotelRoom == null)
+            if (hotelRoom == null || hotelRoom.HotelId !=hotelId)
             {
                 return NotFound();
             }

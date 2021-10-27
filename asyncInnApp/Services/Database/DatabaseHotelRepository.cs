@@ -32,7 +32,12 @@ namespace asyncInnApp.Services.Database
 
     public async Task<List<Hotel>> GetAll ( )
     {
-      return await _context.Hotels.ToListAsync();
+      var result = await _context.Hotels
+        .Include(h => h.HotelRooms)
+        //.ThenInclude(t => t.RoomId)
+        .ToListAsync();
+
+      return result;
     }
 
     public async Task<Hotel> GetHotel ( int id )

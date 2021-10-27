@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using asyncInnApp.Data;
 
 namespace asyncInnApp.Migrations
 {
     [DbContext(typeof(HotelsDBContext))]
-    partial class HotelsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20211027004219_UpdatedSeed")]
+    partial class UpdatedSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,48 +146,6 @@ namespace asyncInnApp.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("HotelRooms");
-
-                    b.HasData(
-                        new
-                        {
-                            RoomNumber = 299,
-                            HotelId = 1,
-                            PetFriendly = true,
-                            Rate = 300m,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            RoomNumber = 102,
-                            HotelId = 1,
-                            PetFriendly = false,
-                            Rate = 100m,
-                            RoomId = 1
-                        },
-                        new
-                        {
-                            RoomNumber = 302,
-                            HotelId = 1,
-                            PetFriendly = true,
-                            Rate = 500m,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            RoomNumber = 201,
-                            HotelId = 1,
-                            PetFriendly = false,
-                            Rate = 250m,
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            RoomNumber = 251,
-                            HotelId = 1,
-                            PetFriendly = false,
-                            Rate = 250m,
-                            RoomId = 2
-                        });
                 });
 
             modelBuilder.Entity("asyncInnApp.Models.Room", b =>
