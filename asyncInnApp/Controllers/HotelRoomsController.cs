@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using asyncInnApp.Data;
 using asyncInnApp.Models;
 using asyncInnApp.Services;
+using asyncInnApp.Models.DTO;
 
 namespace asyncInnApp.Controllers
 {
@@ -86,27 +87,26 @@ namespace asyncInnApp.Controllers
         // POST: api/HotelRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
-        {
-            _context.HotelRooms.Add(hotelRoom);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (HotelRoomExists(hotelRoom.RoomNumber))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+       // public async Task<ActionResult<HotelRoom>> PostHotelRoom(int id, CreateHotelRoomData createData)
+       // {
+      //      _context.HotelRooms.Add(id);
+       //     try
+       //     {
+      //          await _context.SaveChangesAsync();
+       //     }
+       //     catch (DbUpdateException)
+       //if (HotelRoomExists(id))
+       //         {
+        //            return Conflict();
+         //       }
+         //       else
+         //       {
+         //           throw;
+         //       }
+        //   }
 
-            return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.RoomNumber }, hotelRoom);
-        }
+         //   return CreatedAtAction("GetHotelRoom", new { id = roomId }, hotelRoom);
+       // }
 
         // DELETE: api/HotelRooms/5
         [HttpDelete("{id}")]
