@@ -34,7 +34,8 @@ Completed refactoring the hotels.  After that, I moved on to refactoring the ame
 ### 10/25/2021 Update
 Updated indenting and updated some names to keep them consistent.  Started adding the DTO.
 
-### Updated 10/21/2021
+### 10/21/2021 Update
+Worked on getting HotelRoom set up so that I could get working on Swagger.
 
 
 
