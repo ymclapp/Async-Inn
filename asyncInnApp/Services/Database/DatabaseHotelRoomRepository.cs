@@ -8,5 +8,6 @@ namespace asyncInnApp.Services.Database
   public class DatabaseHotelRoomRepository
   {
 
+
   }
 }
