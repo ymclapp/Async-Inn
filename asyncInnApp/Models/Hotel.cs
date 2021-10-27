@@ -29,10 +29,11 @@ namespace asyncInnApp.Models
 
     [Required]
     public string Phone { get; set; }
+    public HotelRoom HotelRooms { get; set; }
 
     //internal static Task Add ( Hotel hotels )
     //{
-   //   throw new NotImplementedException();
+    //   throw new NotImplementedException();
     //}
   }
 }

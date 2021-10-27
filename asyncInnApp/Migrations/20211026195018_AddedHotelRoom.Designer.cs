@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using asyncInnApp.Data;
 
 namespace asyncInnApp.Migrations
 {
     [DbContext(typeof(HotelsDBContext))]
-    partial class HotelsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20211026195018_AddedHotelRoom")]
+    partial class AddedHotelRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,75 +121,6 @@ namespace asyncInnApp.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asyncInnApp.Models.HotelRoom", b =>
-                {
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("PetFriendly")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoomNumber", "HotelId");
-
-                    b.HasIndex("HotelId")
-                        .IsUnique();
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("HotelRooms");
-
-                    b.HasData(
-                        new
-                        {
-                            RoomNumber = 299,
-                            HotelId = 1,
-                            PetFriendly = true,
-                            Rate = 300m,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            RoomNumber = 102,
-                            HotelId = 1,
-                            PetFriendly = false,
-                            Rate = 100m,
-                            RoomId = 1
-                        },
-                        new
-                        {
-                            RoomNumber = 302,
-                            HotelId = 1,
-                            PetFriendly = true,
-                            Rate = 500m,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            RoomNumber = 201,
-                            HotelId = 1,
-                            PetFriendly = false,
-                            Rate = 250m,
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            RoomNumber = 251,
-                            HotelId = 1,
-                            PetFriendly = false,
-                            Rate = 250m,
-                            RoomId = 2
-                        });
-                });
-
             modelBuilder.Entity("asyncInnApp.Models.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -256,25 +189,6 @@ namespace asyncInnApp.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asyncInnApp.Models.HotelRoom", b =>
-                {
-                    b.HasOne("asyncInnApp.Models.Hotel", "Hotel")
-                        .WithOne("HotelRooms")
-                        .HasForeignKey("asyncInnApp.Models.HotelRoom", "HotelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("asyncInnApp.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hotel");
-
-                    b.Navigation("Room");
-                });
-
             modelBuilder.Entity("asyncInnApp.Models.RoomAmenity", b =>
                 {
                     b.HasOne("asyncInnApp.Models.Amenity", "Amenity")
@@ -297,11 +211,6 @@ namespace asyncInnApp.Migrations
             modelBuilder.Entity("asyncInnApp.Models.Amenity", b =>
                 {
                     b.Navigation("RoomAmenities");
-                });
-
-            modelBuilder.Entity("asyncInnApp.Models.Hotel", b =>
-                {
-                    b.Navigation("HotelRooms");
                 });
 
             modelBuilder.Entity("asyncInnApp.Models.Room", b =>
