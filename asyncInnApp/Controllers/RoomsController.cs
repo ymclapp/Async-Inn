@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using asyncInnApp.Data;
 using asyncInnApp.Models;
 using asyncInnApp.Services;
+using asyncInnApp.Models.DTO;
 
 namespace asyncInnApp.Controllers
 {
@@ -27,7 +28,7 @@ namespace asyncInnApp.Controllers
     //***************************************
     // GET: api/Rooms - context is gone
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Room>>> GetRooms ( )
+    public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms ( )
     {
       return await rooms.GetAll();
     }
