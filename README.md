@@ -34,7 +34,8 @@ Completed refactoring the hotels.  After that, I moved on to refactoring the ame
 ### 10/25/2021 Update
 Updated indenting and updated some names to keep them consistent.  Started adding the DTO.
 
-### Updated 10/21/2021
+### 10/27/2021 Update
+Added DTO and swagger.  Still need to add Azure.
 
 
 
