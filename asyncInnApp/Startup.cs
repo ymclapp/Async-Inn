@@ -80,6 +80,11 @@ namespace asyncInnApp
         options.RouteTemplate = "/api/{documentName}/swagger.json";
       });
 
+      app.UseSwaggerUI(options => {
+        options.SwaggerEndpoint("/api/v1/swagger.json", "Async Inn");
+        options.RoutePrefix = "docs";
+      });
+
       app.UseRouting();
 
             app.UseEndpoints(endpoints =>
