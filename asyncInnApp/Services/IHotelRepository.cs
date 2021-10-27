@@ -1,4 +1,5 @@
 using asyncInnApp.Models;
+using asyncInnApp.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace asyncInnApp.Services
 {
   public interface IHotelRepository
   {
-    Task<List<Hotel>> GetAll();
+    Task<List<HotelDTO>> GetAll();
     
     Task<Hotel> GetHotel ( int id );
     
