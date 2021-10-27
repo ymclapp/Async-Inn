@@ -16,7 +16,9 @@ namespace asyncInnApp
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            UpdateDatabase(host.Services);
+            host.Run();
         }
     private static void UpdateDatabase(IServiceProvider services)
     {

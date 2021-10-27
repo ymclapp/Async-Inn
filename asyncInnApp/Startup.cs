@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace asyncInnApp
 {
@@ -49,6 +50,16 @@ namespace asyncInnApp
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
+      services.AddSwaggerGen(options =>
+      {
+            //make sure  to get the "using statement"
+            options.SwaggerDoc("v1", new OpenApiInfo()
+        {
+          Title = "Async Inn",
+          Version = "v1",
+        });
+      });
+
       //Our services!
       //Can't be a singleton because it dpends on Scoped DbContext
       //services.AddSingleton<IHotelRepository, DatabaseHotelRepository>();
@@ -65,8 +76,11 @@ namespace asyncInnApp
             {
                 app.UseDeveloperExceptionPage();
             }
+      app.UseSwagger(options => {
+        options.RouteTemplate = "/api/{documentName}/swagger.json";
+      });
 
-            app.UseRouting();
+      app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
