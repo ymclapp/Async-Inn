@@ -1,5 +1,6 @@
 using asyncInnApp.Data;
 using asyncInnApp.Models;
+using asyncInnApp.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,11 +31,21 @@ namespace asyncInnApp.Services.Database
       throw new NotImplementedException();
     }
 
-    public async Task<List<Hotel>> GetAll ( )
+    public async Task<List<HotelDTO>> GetAll ( )
     {
       var result = await _context.Hotels
         .Include(h => h.HotelRooms)
         //.ThenInclude(t => t.RoomId)
+        .Select(hotel => new HotelDTO
+        {
+          ID = hotel.Id,
+          Name = hotel.Name,
+          StreetAddress = hotel.StreetAddress,
+          City = hotel.City,
+          State = hotel.State,
+          Phone = hotel.Phone,
+          //Rooms = hotel.Rooms,
+        })
         .ToListAsync();
 
       return result;

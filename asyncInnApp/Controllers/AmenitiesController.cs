@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using asyncInnApp.Data;
 using asyncInnApp.Models;
 using asyncInnApp.Services;
+using asyncInnApp.Models.DTO;
 
 namespace asyncInnApp.Controllers
 {
@@ -27,7 +28,7 @@ namespace asyncInnApp.Controllers
     //******************************************
         // GET: api/Amenities - context is gone
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenity>>> GetAmenities()
+        public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
           return await amenities.GetAll();
         }

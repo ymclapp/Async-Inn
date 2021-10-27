@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using asyncInnApp.Data;
 using asyncInnApp.Models;
 using asyncInnApp.Services;
+using asyncInnApp.Models.DTO;
 
 namespace asyncInnApp.Controllers
 {
-    [Route("api/Hotels/{hotelId}/HotelRoom")]
+    [Route("api/Hotels/{hotelId}/Rooms")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -28,9 +29,10 @@ namespace asyncInnApp.Controllers
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId, int roomId)
         {
             return await _context.HotelRooms
-                  .Where(h => h.HotelId == hotelId)//hotel is like students in transcripts
-                  .Include(h => h.Hotel)
-                  .Include(h => h.Room)//<<--this doesn't seem right - roomnumber?
+                  .Where(hr => hr.HotelId == hotelId)//hotel is like students in transcripts
+                  .Include(hr => hr.Hotel)
+                  .Include(hr => hr.Room)//<<--this doesn't seem right - roomnumber?
+                  .ThenInclude(a => a.RoomAmenities)
                   .ToListAsync();
         }
 
@@ -40,7 +42,7 @@ namespace asyncInnApp.Controllers
         {
       var hotelRoom = await _context.HotelRooms
           .Include(h => h.Hotel)
-          .Include(h => h.RoomNumber)
+          //.Include(h => h.RoomNumber)
           .FirstOrDefaultAsync(h => h.HotelId == id);
 
             if (hotelRoom == null || hotelRoom.HotelId !=hotelId)
@@ -85,27 +87,26 @@ namespace asyncInnApp.Controllers
         // POST: api/HotelRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
-        {
-            _context.HotelRooms.Add(hotelRoom);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (HotelRoomExists(hotelRoom.RoomNumber))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+       // public async Task<ActionResult<HotelRoom>> PostHotelRoom(int id, CreateHotelRoomData createData)
+       // {
+      //      _context.HotelRooms.Add(id);
+       //     try
+       //     {
+      //          await _context.SaveChangesAsync();
+       //     }
+       //     catch (DbUpdateException)
+       //if (HotelRoomExists(id))
+       //         {
+        //            return Conflict();
+         //       }
+         //       else
+         //       {
+         //           throw;
+         //       }
+        //   }
 
-            return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.RoomNumber }, hotelRoom);
-        }
+         //   return CreatedAtAction("GetHotelRoom", new { id = roomId }, hotelRoom);
+       // }
 
         // DELETE: api/HotelRooms/5
         [HttpDelete("{id}")]

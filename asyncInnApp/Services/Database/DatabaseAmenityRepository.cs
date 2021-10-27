@@ -1,5 +1,6 @@
 using asyncInnApp.Data;
 using asyncInnApp.Models;
+using asyncInnApp.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -41,16 +42,24 @@ namespace asyncInnApp.Services.Database
     _context.RoomAmenities.Remove(roomAmenity);
       await _context.SaveChangesAsync ( );
     }
-  public async Task<List<Amenity>> GetAll ( )
+  public Task<List<AmenityDTO>> GetAll ( )
     {
-      var result =  await _context.Amenities
+      return _context.Amenities
+        .Select(amenity => new AmenityDTO
+        {
+          //copy properties from amenity to Amenity DTO
+          ID = amenity.Id,
+          Name = amenity.Name
+        })
+        .ToListAsync();
+      //var result =  await _context.Amenities
         //Go get all of each Amenity's RoomAmenity
-        .Include(a => a.RoomAmenities)
+       // .Include(a => a.RoomAmenities)
         //and also include each RoomAmenity Room
-      .ThenInclude(r => r.Room)
-      .ToListAsync();
+      //.ThenInclude(r => r.Room)
+     // .ToListAsync();
 
-      return result;
+      //return result;
     }
 
     public async Task<Amenity> GetAmenity ( int id )
