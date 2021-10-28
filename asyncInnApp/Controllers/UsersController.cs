@@ -12,9 +12,16 @@ namespace asyncInnApp.Controllers
   [ApiController]
   public class UsersController : ControllerBase
   {
+    private readonly IUserService userService;
+
+    public UsersController(IUserService userService)
+    {
+      this.userService = userService;
+    }
     [HttpPost("Register")]
     public async Task<IActionResult> Register ( RegisterData data )
     {
+      await userService.Register(data);
       return Ok();
     }
   }

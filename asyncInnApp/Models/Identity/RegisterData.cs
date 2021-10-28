@@ -16,7 +16,7 @@ namespace asyncInnApp.Models.Identity
     public string Username { get; set; }
 
     [Required]
-    public string PasswordHash { get; set; }
+    public string Password { get; set; }
     public bool AcceptedTerms { get; set; }
 
     //we could add more, like FirstName or LastName, but would have to add to the standardized framwork for Identiity
