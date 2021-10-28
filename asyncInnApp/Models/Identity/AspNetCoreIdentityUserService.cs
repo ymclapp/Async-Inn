@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace asyncInnApp.Models.Identity
     {
       this.userManager = userManager;
     }
-    public async Task<ApplicationUser> Register ( RegisterData data )
+    public async Task<ApplicationUser> Register ( RegisterData data, ModelStateDictionary modelState )
     {
       var user = new ApplicationUser
       {
@@ -27,7 +28,18 @@ namespace asyncInnApp.Models.Identity
       {
         return user;
       }
+
+      foreach (var error in result.Errors)
+      {
+        var errorKey =
+            error.Code.Contains("Password") ? nameof(data.Password) :
+            error.Code.Contains("Email") ? nameof(data.Email) :
+            error.Code.Contains("UserName") ? nameof(data.Username) :
+            "";
+        modelState.AddModelError(errorKey, error.Description);
+      }
       return null;
     }
+
   }
 }
