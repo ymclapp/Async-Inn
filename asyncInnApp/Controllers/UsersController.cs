@@ -1,3 +1,4 @@
+using asyncInnApp.Models.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,8 +12,10 @@ namespace asyncInnApp.Controllers
   [ApiController]
   public class UsersController : ControllerBase
   {
-    public async Task<IActionResult>()
+    [HttpPost("Register")]
+    public async Task<IActionResult> Register ( RegisterData data )
     {
-        return OK();
+      return Ok();
     }
   }
+}
