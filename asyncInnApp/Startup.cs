@@ -8,6 +8,7 @@ using asyncInnApp.Models.Identity;
 //using asyncInnApp.Models.Services;
 using asyncInnApp.Services;
 using asyncInnApp.Services.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -67,6 +68,16 @@ namespace asyncInnApp
 
       services.AddScoped<IUserService, AspNetCoreIdentityUserService>();
       services.AddSingleton<JwtService>();
+      services.AddAuthentication(options =>
+      {
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      })
+        .AddJwtBearer(options =>
+        {
+          options.TokenValidationParameters = JwtService.GetValidationParameters(Configuration);
+        });
 
       //.AddJsonOptions is what is used to stop the "circular reference"
       services
@@ -95,6 +106,7 @@ namespace asyncInnApp
             {
                 app.UseDeveloperExceptionPage();
             }
+
       app.UseSwagger(options => {
         options.RouteTemplate = "/api/{documentName}/swagger.json";
       });
@@ -106,7 +118,12 @@ namespace asyncInnApp
 
       app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
+      //Figure out who the user is
+      app.UseAuthentication();
+      //And what  they can do
+      app.UseAuthorization();
+
+      app.UseEndpoints(endpoints =>
             {
               endpoints.MapControllers();
 
