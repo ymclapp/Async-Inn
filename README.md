@@ -36,7 +36,7 @@ Updated indenting and updated some names to keep them consistent.  Started addin
 
 ### 10/27/2021 Update
 Added DTO and swagger.  Still need to add Azure.
-
+Added Identity.  Not completely done, but most of lab is done.
 
 
 
