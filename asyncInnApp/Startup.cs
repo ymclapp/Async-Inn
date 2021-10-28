@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using asyncInnApp.Data;
 using asyncInnApp.Models.Identity;
+using asyncInnApp.Models.Services.Identity;
 using asyncInnApp.Services;
 using asyncInnApp.Services.Database;
 using Microsoft.AspNetCore.Builder;
@@ -43,8 +44,9 @@ namespace asyncInnApp
             options.UseSqlServer(connectionString);
           });
 
-      //.AddJsonOptions is what is used to stop the "cicular reference"
-          services
+      services.AddScoped<IUserService, AspNetCoreIdentityUserService>();
+      //.AddJsonOptions is what is used to stop the "circular reference"
+      services
             .AddControllers()
             .AddNewtonsoftJson(options =>
             {
@@ -78,6 +80,8 @@ namespace asyncInnApp
 
       })
        .AddEntityFrameworkStores<HotelsDBContext>();
+
+
     }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
