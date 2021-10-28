@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using static asyncInnApp.Models.Identity.AspNetCoreIdentityUserService;
 
 namespace asyncInnApp
 {
@@ -44,25 +45,8 @@ namespace asyncInnApp
             options.UseSqlServer(connectionString);
           });
 
-      services.AddScoped<IUserService, AspNetCoreIdentityUserService>();
-      //.AddJsonOptions is what is used to stop the "circular reference"
-      services
-            .AddControllers()
-            .AddNewtonsoftJson(options =>
-            {
-              options.SerializerSettings.ReferenceLoopHandling =
-                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
 
-      services.AddSwaggerGen(options =>
-      {
-            //make sure  to get the "using statement"
-            options.SwaggerDoc("v1", new OpenApiInfo()
-        {
-          Title = "Async Inn",
-          Version = "v1",
-        });
-      });
+
 
       //Our services!
       //Can't be a singleton because it dpends on Scoped DbContext
@@ -81,7 +65,27 @@ namespace asyncInnApp
       })
        .AddEntityFrameworkStores<HotelsDBContext>();
 
+      services.AddScoped<IUserService, AspNetCoreIdentityUserService>();
+      services.AddSingleton<JwtService>();
 
+      //.AddJsonOptions is what is used to stop the "circular reference"
+      services
+            .AddControllers()
+            .AddNewtonsoftJson(options =>
+            {
+              options.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+
+      services.AddSwaggerGen(options =>
+      {
+        //make sure  to get the "using statement"
+        options.SwaggerDoc("v1", new OpenApiInfo()
+        {
+          Title = "Async Inn",
+          Version = "v1",
+        });
+      });
     }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

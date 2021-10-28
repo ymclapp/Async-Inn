@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace asyncInnApp.Models.Identity
 {
-  public class AspNetCoreIdentityUserService : IUserService  //IdentityUserService in steps, but you can name whatever
+  public partial class AspNetCoreIdentityUserService : IUserService  //IdentityUserService in steps, but you can name whatever
   {
     private readonly UserManager<ApplicationUser> userManager;
+    private readonly JwtService jwtService;
 
-    public AspNetCoreIdentityUserService(UserManager<ApplicationUser> userManager)
+    public AspNetCoreIdentityUserService(UserManager<ApplicationUser> userManager, JwtService jwtService)
     {
       this.userManager = userManager;
+      this.jwtService = jwtService;
     }
 
     public async Task<UserDto> Authenticate ( LoginData data )
