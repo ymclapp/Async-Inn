@@ -38,6 +38,7 @@ Updated indenting and updated some names to keep them consistent.  Started addin
 Added DTO and swagger.  Still need to add Azure.
 Added Identity.  Not completely done, but most of lab is done.
 
-
+### 10/28/2021
+Register is complete for the DTO, swagger is working, added login, and login is working.
 
 

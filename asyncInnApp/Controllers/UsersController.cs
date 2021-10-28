@@ -1,3 +1,4 @@
+using asyncInnApp.Models.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,8 +12,31 @@ namespace asyncInnApp.Controllers
   [ApiController]
   public class UsersController : ControllerBase
   {
-    public async Task<IActionResult>()
+    private readonly IUserService userService;
+
+    public UsersController(IUserService userService)
     {
-        return OK();
+      this.userService = userService;
+    }
+    [HttpPost("Register")]
+    public async Task<ActionResult<UserDto>> Register ( RegisterData data )
+    {
+      var user = await userService.Register(data, this.ModelState);
+      if (user == null)
+        return BadRequest(new ValidationProblemDetails(ModelState));
+
+      return user;
+    }
+
+    [HttpPost("Login")]
+    public async Task<ActionResult<UserDto>> Login(LoginData data)
+    {
+      var user = await userService.Authenticate(data);
+
+      if (user == null)
+        return Unauthorized();
+
+      return user;
     }
   }
+}
