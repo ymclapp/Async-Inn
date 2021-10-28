@@ -1,4 +1,6 @@
 using asyncInnApp.Models;
+using asyncInnApp.Models.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace asyncInnApp.Data
 {
-  public class HotelsDBContext : DbContext
+  public class HotelsDBContext : IdentityDbContext<ApplicationUser>
   {
     public HotelsDBContext(DbContextOptions options) : base(options) { }
 
@@ -19,6 +21,9 @@ namespace asyncInnApp.Data
     public DbSet<HotelRoom> HotelRooms { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+      // This calls the base method, and Identity needs it
+      base.OnModelCreating(modelBuilder);
+
       modelBuilder.Entity<Hotel>()
         .HasData(
         new Hotel {
