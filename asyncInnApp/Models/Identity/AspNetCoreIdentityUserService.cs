@@ -15,7 +15,7 @@ namespace asyncInnApp.Models.Identity
     {
       this.userManager = userManager;
     }
-    public async Task<ApplicationUser> Register ( RegisterData data, ModelStateDictionary modelState )
+    public async Task<UserDto> Register ( RegisterData data, ModelStateDictionary modelState )
     {
       var user = new ApplicationUser
       {
@@ -26,7 +26,13 @@ namespace asyncInnApp.Models.Identity
       var result = await userManager.CreateAsync(user, data.Password );
       if(result.Succeeded)
       {
-        return user;
+        return new UserDto
+        {
+          UserId = user.Id,
+          Email = user.Email,
+          Username = user.UserName,
+        };
+
       }
 
       foreach (var error in result.Errors)
