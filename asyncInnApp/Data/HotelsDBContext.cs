@@ -1,4 +1,6 @@
 using asyncInnApp.Models;
+using asyncInnApp.Models.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace asyncInnApp.Data
 {
-  public class HotelsDBContext : DbContext
+  public class HotelsDBContext : IdentityDbContext<ApplicationUser>
   {
     public HotelsDBContext(DbContextOptions options) : base(options) { }
 
