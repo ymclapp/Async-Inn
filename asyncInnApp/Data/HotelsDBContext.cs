@@ -21,6 +21,9 @@ namespace asyncInnApp.Data
     public DbSet<HotelRoom> HotelRooms { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+      // This calls the base method, and Identity needs it
+      base.OnModelCreating(modelBuilder);
+
       modelBuilder.Entity<Hotel>()
         .HasData(
         new Hotel {
