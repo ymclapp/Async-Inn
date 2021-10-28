@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using asyncInnApp.Data;
+using asyncInnApp.Models.Identity;
 using asyncInnApp.Services;
 using asyncInnApp.Services.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,7 +69,16 @@ namespace asyncInnApp
       services.AddScoped<IHotelRepository, DatabaseHotelRepository>();
       services.AddScoped<IRoomRepository, DatabaseRoomRepository>();
       services.AddScoped<IAmenityRepository, DatabaseAmenityRepository>();
-        }
+
+      //Identity!
+      services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+      {
+        // Configure password requirements, etc
+        options.User.RequireUniqueEmail = true;
+
+      })
+       .AddEntityFrameworkStores<HotelsDBContext>();
+    }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
