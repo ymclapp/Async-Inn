@@ -25,7 +25,7 @@ namespace asyncInnApp.Controllers
       if (user == null)
         return BadRequest();
 
-      return Ok();
+      return Ok(user);
     }
   }
 }
