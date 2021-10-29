@@ -45,7 +45,12 @@ namespace asyncInnApp.Controllers
     [HttpGet("[action]")]
     public async Task<ActionResult<UserDto>> Self()//can I get information about myself
     {
-      return await userService.GetUser(this.User);
+      var user = await userService.GetUser(this.User);
+
+      if (User == null)
+        return NotFound();
+
+      return user;
     }
   }
 }
