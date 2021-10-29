@@ -9,9 +9,11 @@ using asyncInnApp.Data;
 using asyncInnApp.Models;
 using asyncInnApp.Services;
 using asyncInnApp.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace asyncInnApp.Controllers
 {
+  [Authorize]//you have to be authorized to edit rooms
   [Route("api/[controller]")]
   [ApiController]
   public class RoomsController : ControllerBase
@@ -78,6 +80,7 @@ namespace asyncInnApp.Controllers
 
     //************************************
     // DELETE: api/Rooms/5 - context is gone
+    [Authorize(Roles = "Administrator")]//you have to be authorized to edit rooms
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRoom ( int id )
     {

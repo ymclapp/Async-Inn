@@ -9,6 +9,7 @@ using asyncInnApp.Data;
 using asyncInnApp.Models;
 using asyncInnApp.Services;
 using asyncInnApp.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace asyncInnApp.Controllers
 {
@@ -49,9 +50,10 @@ namespace asyncInnApp.Controllers
         }
 
     //****************************************
-        // PUT: api/Amenities/5 - context is gone
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+    // PUT: api/Amenities/5 - context is gone
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [Authorize(Roles = "Administrator")]  //you have to be an administrator to update amenities
+    [HttpPut("{id}")]
         public async Task<IActionResult> PutAmenity(int id, Amenity amenity)
         {
             if (id != amenity.Id)
@@ -68,9 +70,10 @@ namespace asyncInnApp.Controllers
 
 
     //*********************************************************************
-        // POST: api/Amenities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("{id}")]
+    // POST: api/Amenities
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [Authorize(Roles = "Administrator")]  //you have to be an administrator to update amenities
+    [HttpPost("{id}")]
         public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
         {
             await this.amenities.Add(amenity);
@@ -80,7 +83,8 @@ namespace asyncInnApp.Controllers
 
     //*********************************************************************
     // DELETE: api/Amenities/5
-        [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrator")]  //you have to be an administrator to update amenities
+    [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAmenity(int id)
         {
             var amenity = await _context.Amenities.FindAsync(id);
