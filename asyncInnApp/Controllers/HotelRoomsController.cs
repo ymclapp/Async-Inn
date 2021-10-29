@@ -9,10 +9,12 @@ using asyncInnApp.Data;
 using asyncInnApp.Models;
 using asyncInnApp.Services;
 using asyncInnApp.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace asyncInnApp.Controllers
 {
-    [Route("api/Hotels/{hotelId}/Rooms")]
+  [Authorize(Roles = "District Manager")]
+  [Route("api/Hotels/{hotelId}/Rooms")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -24,8 +26,11 @@ namespace asyncInnApp.Controllers
       _context = context;
         }
 
-        // GET: api/HotelRooms
-        [HttpGet]
+    // GET: api/HotelRooms
+    [AllowAnonymous]
+    [Authorize(Roles = "Agent")]
+    [Authorize(Roles = "Property Manager")]
+    [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId, int roomId)
         {
             return await _context.HotelRooms
@@ -36,8 +41,11 @@ namespace asyncInnApp.Controllers
                   .ToListAsync();
         }
 
-        // GET: api/HotelRooms/5
-        [HttpGet("{id}")]
+    // GET: api/HotelRooms/5
+    [AllowAnonymous]
+    [Authorize(Roles = "Agent")]
+    [Authorize(Roles = "Property Manager")]
+    [HttpGet("{id}")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int id)
         {
       var hotelRoom = await _context.HotelRooms
@@ -53,9 +61,11 @@ namespace asyncInnApp.Controllers
             return hotelRoom;
         }
 
-        // PUT: api/HotelRooms/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+    // PUT: api/HotelRooms/5
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [Authorize(Roles = "Agent")]
+    [Authorize(Roles = "Property Manager")]
+    [HttpPut("{id}")]
         public async Task<IActionResult> PutHotelRoom(int id, HotelRoom hotelRoom)
         {
             if (id != hotelRoom.RoomNumber)
@@ -84,9 +94,10 @@ namespace asyncInnApp.Controllers
             return NoContent();
         }
 
-        // POST: api/HotelRooms
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+    // POST: api/HotelRooms
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    //[Authorize(Roles = "Property Manager")]
+   // [HttpPost]
        // public async Task<ActionResult<HotelRoom>> PostHotelRoom(int id, CreateHotelRoomData createData)
        // {
       //      _context.HotelRooms.Add(id);

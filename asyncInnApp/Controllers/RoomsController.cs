@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace asyncInnApp.Controllers
 {
-  [Authorize]//you have to be authorized to edit rooms
+  [Authorize(Roles = "District Manager")]//you have to be authorized to edit rooms
   [Route("api/[controller]")]
   [ApiController]
   public class RoomsController : ControllerBase
@@ -29,6 +29,7 @@ namespace asyncInnApp.Controllers
 
     //***************************************
     // GET: api/Rooms - context is gone
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms ( )
     {
@@ -36,6 +37,7 @@ namespace asyncInnApp.Controllers
     }
 
     // GET: api/Rooms/5 - context is gone
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<ActionResult<Room>> GetRoom ( int id )
     {

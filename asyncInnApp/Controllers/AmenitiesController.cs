@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace asyncInnApp.Controllers
 {
-    [Route("api/[controller]")]
+  [Authorize(Roles = "District Manager")]
+  [Route("api/[controller]")]
     [ApiController]
     public class AmenitiesController : ControllerBase
     {
@@ -27,16 +28,18 @@ namespace asyncInnApp.Controllers
         }
 
     //******************************************
-        // GET: api/Amenities - context is gone
-        [HttpGet]
+    // GET: api/Amenities - context is gone
+    [AllowAnonymous]
+    [HttpGet]
         public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
           return await amenities.GetAll();
         }
 
     //***********************************
-        // GET: api/Amenities/5 - context is gone
-        [HttpGet("{id}")]
+    // GET: api/Amenities/5 - context is gone
+    [AllowAnonymous]
+    [HttpGet("{id}")]
         public async Task<ActionResult<Amenity>> GetAmenity(int id)
         {
             var amenity = await this.amenities.GetAmenity(id);
@@ -53,6 +56,7 @@ namespace asyncInnApp.Controllers
     // PUT: api/Amenities/5 - context is gone
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [Authorize(Roles = "Administrator")]  //you have to be an administrator to update amenities
+    [Authorize(Roles = "Property Manager")]
     [HttpPut("{id}")]
         public async Task<IActionResult> PutAmenity(int id, Amenity amenity)
         {
@@ -101,7 +105,9 @@ namespace asyncInnApp.Controllers
 
     //*********************************************************************
     //POST:  api/Amenities/5/Rooms/17
-        [HttpPost]
+    [Authorize(Roles = "Agent")]
+    [Authorize(Roles = "Property Manager")]
+    [HttpPost]
         [Route("{id}/Rooms/{roomId}")]
         public async Task<IActionResult> AddAmenityToRoom ( int id, int roomId )
         {
@@ -111,7 +117,8 @@ namespace asyncInnApp.Controllers
 
     //*********************************************************************
     //DELETE:  api/Amenities/5/Rooms/17
-        [HttpDelete]
+    [Authorize(Roles = "Agent")]
+    [HttpDelete]
         [Route("{id}/Rooms/{roomId}")]
         public async Task<IActionResult> RemoveFromRoom(int id, int roomId)
         {
