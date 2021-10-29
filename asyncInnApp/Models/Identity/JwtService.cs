@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace asyncInnApp.Models.Identity
 {
@@ -9,6 +12,30 @@ namespace asyncInnApp.Models.Identity
   {
     public class JwtService
     {
+      private readonly SignInManager<ApplicationUser> signInManager;
+      private readonly IConfiguration configuration;
+
+      public JwtService ( SignInManager<ApplicationUser> signInManager, IConfiguration configuration )
+      {
+        this.signInManager = signInManager;
+        this.configuration = configuration;
+      }
+
+      public async Task<string> GetToken ( ApplicationUser user, TimeSpan expiresIn )
+      {
+        var principal = await signInManager.CreateUserPrincipalAsync(user);
+        if (principal == null) { return null; }
+
+        var signingKey = GetSecurityKey(configuration);
+        var token = new JwtSecurityToken(
+          expires: DateTime.UtcNow + expiresIn,
+          signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
+          claims: principal.Claims
+         );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+      }
+
       // Validate that our "secrets" are actually secrets and that they match
       // This will be used by the validator
       public static TokenValidationParameters GetValidationParameters ( IConfiguration configuration )

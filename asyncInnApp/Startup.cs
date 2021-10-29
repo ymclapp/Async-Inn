@@ -67,7 +67,7 @@ namespace asyncInnApp
        .AddEntityFrameworkStores<HotelsDBContext>();
 
       services.AddScoped<IUserService, AspNetCoreIdentityUserService>();
-      services.AddSingleton<JwtService>();
+      services.AddScoped<JwtService>();//can't be singleton
       services.AddAuthentication(options =>
       {
         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
