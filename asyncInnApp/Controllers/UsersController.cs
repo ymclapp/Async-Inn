@@ -1,4 +1,5 @@
 using asyncInnApp.Models.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -35,6 +36,19 @@ namespace asyncInnApp.Controllers
 
       if (user == null)
         return Unauthorized();
+
+      return user;
+    }
+
+    //Can't access this if you are not signed in
+    [Authorize]  //can be put on any controller or action
+    [HttpGet("[action]")]
+    public async Task<ActionResult<UserDto>> Self()//can I get information about myself
+    {
+      var user = await userService.GetUser(this.User);
+
+      if (User == null)
+        return NotFound();
 
       return user;
     }

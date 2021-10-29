@@ -8,6 +8,7 @@ using asyncInnApp.Models.Identity;
 //using asyncInnApp.Models.Services;
 using asyncInnApp.Services;
 using asyncInnApp.Services.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using static asyncInnApp.Models.Identity.AspNetCoreIdentityUserService;
 
 namespace asyncInnApp
 {
@@ -44,25 +46,8 @@ namespace asyncInnApp
             options.UseSqlServer(connectionString);
           });
 
-      services.AddScoped<IUserService, AspNetCoreIdentityUserService>();
-      //.AddJsonOptions is what is used to stop the "circular reference"
-      services
-            .AddControllers()
-            .AddNewtonsoftJson(options =>
-            {
-              options.SerializerSettings.ReferenceLoopHandling =
-                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
 
-      services.AddSwaggerGen(options =>
-      {
-            //make sure  to get the "using statement"
-            options.SwaggerDoc("v1", new OpenApiInfo()
-        {
-          Title = "Async Inn",
-          Version = "v1",
-        });
-      });
+
 
       //Our services!
       //Can't be a singleton because it dpends on Scoped DbContext
@@ -81,7 +66,37 @@ namespace asyncInnApp
       })
        .AddEntityFrameworkStores<HotelsDBContext>();
 
+      services.AddScoped<IUserService, AspNetCoreIdentityUserService>();
+      services.AddScoped<JwtService>();//can't be singleton
+      services.AddAuthentication(options =>
+      {
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      })
+        .AddJwtBearer(options =>
+        {
+          options.TokenValidationParameters = JwtService.GetValidationParameters(Configuration);
+        });
 
+      //.AddJsonOptions is what is used to stop the "circular reference"
+      services
+            .AddControllers()
+            .AddNewtonsoftJson(options =>
+            {
+              options.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+
+      services.AddSwaggerGen(options =>
+      {
+        //make sure  to get the "using statement"
+        options.SwaggerDoc("v1", new OpenApiInfo()
+        {
+          Title = "Async Inn",
+          Version = "v1",
+        });
+      });
     }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,6 +106,7 @@ namespace asyncInnApp
             {
                 app.UseDeveloperExceptionPage();
             }
+
       app.UseSwagger(options => {
         options.RouteTemplate = "/api/{documentName}/swagger.json";
       });
@@ -102,7 +118,12 @@ namespace asyncInnApp
 
       app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
+      //Figure out who the user is
+      app.UseAuthentication();
+      //And what  they can do
+      app.UseAuthorization();
+
+      app.UseEndpoints(endpoints =>
             {
               endpoints.MapControllers();
 

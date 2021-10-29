@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace asyncInnApp.Models.Identity
@@ -7,5 +9,6 @@ namespace asyncInnApp.Models.Identity
   {
     Task <UserDto> Register ( RegisterData data, ModelStateDictionary modelState );
     Task <UserDto>Authenticate ( LoginData data );
+    Task<UserDto> GetUser ( ClaimsPrincipal user );
   }
 }
