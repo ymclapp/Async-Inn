@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace asyncInnApp.Controllers
 {
+  [Authorize(Roles = "District Manager")]
   [Route("api/[controller]")]
   [ApiController]
   public class UsersController : ControllerBase

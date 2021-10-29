@@ -1,5 +1,6 @@
 using asyncInnApp.Models;
 using asyncInnApp.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -143,8 +144,26 @@ namespace asyncInnApp.Data
             }
 
      );
+      SeedRole(modelBuilder, "Administrator");
+      SeedRole(modelBuilder, "Editor");
+      SeedRole(modelBuilder, "Admissions");
+      SeedRole(modelBuilder, "District Manager");
+      SeedRole(modelBuilder, "Property Manager");
+      SeedRole(modelBuilder, "Agent");
+      SeedRole(modelBuilder, "Anonymous");
 
+    }
 
+    private void SeedRole ( ModelBuilder modelBuilder, string roleName )
+    {
+      var role = new IdentityRole
+      {
+        Id = roleName,
+        Name = roleName,
+        NormalizedName = roleName.ToUpper(),
+        ConcurrencyStamp = Guid.Empty.ToString(),
+      };
+      modelBuilder.Entity<IdentityRole>().HasData(role);
     }
   }
 }
