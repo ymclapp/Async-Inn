@@ -29,5 +29,8 @@ namespace asyncInnApp.Models.Identity
     public bool AcceptedTerms { get; set; }
 
     //we could add more, like FirstName or LastName, but would have to add to the standardized framwork for Identiity
+
+    //Do not allow this in a real app!!!
+    public string[] Roles { get; set; }
   }
 }

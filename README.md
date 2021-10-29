@@ -42,6 +42,6 @@ Added Identity.  Not completely done, but most of lab is done.
 Register is complete for the DTO, swagger is working, added login, and login is working.  Also added the rest of identity and JWT.  Started the rest of authorization and roles, but done.
 
 ### 10/29/2021
-
+Added [Authorize] with or without roles.  Seeded roles.  Updated RegisterData
 
 
